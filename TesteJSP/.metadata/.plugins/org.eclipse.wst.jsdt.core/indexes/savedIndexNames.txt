@@ -1,7 +1,0 @@
-INDEX VERSION 1.3+C:\Users\Rodrigo\Desktop\TesteJSP\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
-3986590441.index
-1457510379.index
-3158189347.index
-2416626715.index
-979025784.index
-415281639.index
