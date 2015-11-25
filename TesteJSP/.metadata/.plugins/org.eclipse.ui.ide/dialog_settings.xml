@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="ExternalProjectImportWizard">
+		<item value="true" key="WizardProjectsImportPage.STORE_NESTED_PROJECTS"/>
+		<item value="true" key="WizardProjectsImportPage.STORE_COPY_PROJECT_ID"/>
+		<item value="false" key="WizardProjectsImportPage.STORE_ARCHIVE_SELECTED"/>
+		<list key="WizardProjectsImportPage.STORE_DIRECTORIES">
+			<item value="C:\Users\Rodrigo\Desktop\back up pen\TESTES E ESTUDOS\RC-LOJA"/>
+			<item value=""/>
+			<item value="C:\Users\Rodrigo\Desktop\back up pen\FIAP\1-semestre\Desenvolvimento de Sistemas Web (THIAGO TOSHIYUKI I. YAMAMOTO)\Projeto"/>
+		</list>
+		<list key="WizardProjectsImportPage.STORE_ARCHIVES">
+			<item value=""/>
+			<item value="C:\Users\Rodrigo\Desktop\back up pen\FIAP\2-semestre\Desenvolvimento de Sistemas Web (THIAGO TOSHIYUKI I. YAMAMOTO)\Exercicios\Tudo.zip"/>
+		</list>
+	</section>
+</section>
