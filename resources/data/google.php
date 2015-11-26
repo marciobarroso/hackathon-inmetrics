@@ -27,7 +27,7 @@
 
 		$status = $xml->{"status"};
 		
-		print_r($xml->children("result"));
+		print_r($xml->{"result"});
 
 		print_r($status);
 
