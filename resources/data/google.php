@@ -24,11 +24,11 @@
 
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
-		$newXML = new SimpleXMLElement("<google />");
+		
+		$json = json_decode($xml);
+		$arr = json_decode($json, TRUE);
 
-		print_r(dom_import_simplexml($xml->status);
-
-		echo $xml->asXML();
+		print_r($arr);
 	}
 
 	function error() {
