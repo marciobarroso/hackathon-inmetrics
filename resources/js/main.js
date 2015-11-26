@@ -64,10 +64,12 @@ function getUserGeoLocation() {
 
 function nearbySearch(query) {
 	$.ajax({
-	  	dataType: "json",
+		type: "GET",
+	  	dataType: "jsonp",
 	  	url: getNearbySearchUrl(query),
-	  	data: GoogleSearchResult,
-	  	success: function(){
+	  	cache: false,
+	  	success: function(response){
+	  		GoogleSearchResult = response;
 	  		console.log("success");
 			console.log(GoogleSearchResult);
 	  	}
