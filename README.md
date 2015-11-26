@@ -17,3 +17,8 @@ Rodolfo
 		- jquery (all needed for jquery)
 	- README.md
 	- index.html
+
+
+
+# Fontes
+Google API Geo Localização - https://developers.google.com/web/fundamentals/native-hardware/user-location/obtain-location#when-to-use-geolocation	

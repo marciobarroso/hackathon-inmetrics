@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 $(document).ready(function(){
 
 	$("#btn-main").click(function(){
@@ -78,3 +79,6 @@ function callback(results, status) {
     }
   }
 }
+=======
+
+>>>>>>> 0af14827fabad9453c33cbc6257afc5323808137

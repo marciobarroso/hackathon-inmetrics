@@ -6,6 +6,20 @@
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Ranktoon</title>
 		
+		<link rel="apple-touch-icon" sizes="57x57" href="resources/images/favicon/apple-touch-icon-57x57.png">
+		<link rel="apple-touch-icon" sizes="60x60" href="resources/images/favicon/apple-touch-icon-60x60.png">
+		<link rel="apple-touch-icon" sizes="72x72" href="resources/images/favicon/apple-touch-icon-72x72.png">
+		<link rel="apple-touch-icon" sizes="76x76" href="resources/images/favicon/apple-touch-icon-76x76.png">
+		<link rel="apple-touch-icon" sizes="114x114" href="resources/images/favicon/apple-touch-icon-114x114.png">
+		<link rel="apple-touch-icon" sizes="120x120" href="resources/images/favicon/apple-touch-icon-120x120.png">
+		<link rel="icon" type="image/png" href="resources/images/favicon/favicon-32x32.png" sizes="32x32">
+		<link rel="icon" type="image/png" href="resources/images/favicon/favicon-96x96.png" sizes="96x96">
+		<link rel="icon" type="image/png" href="resources/images/favicon/favicon-16x16.png" sizes="16x16">
+		<link rel="manifest" href="resources/images/favicon/manifest.json">
+		<link rel="mask-icon" href="resources/images/favicon/safari-pinned-tab.svg" color="#5bbad5">
+		<meta name="msapplication-TileColor" content="#da532c">
+		<meta name="theme-color" content="#ffffff">
+
 		<link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap.min.css">
 		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
 
@@ -25,7 +39,7 @@
 						<div class="col-md-4" id=""></div>
 						<form>
 							<div class="form-group col-md-4">
-								<input type="text" id="busca" placeholder="Busca" class="form-control">
+								<input type="text" id="busca" placeholder="O que você procura?" class="form-control">
 							</div>
 							<div class="form-group">
 								<input id="btn-main" type="button" value="Buscar" class="btn btn-primary">
@@ -40,40 +54,135 @@
 
 				<div class="row">
 
-					<div class="col-md-1"></div>				
+				<div class="col-md-1"></div>
 
-					<div class="col-md-10">
+				<div class="col-md-10">
 
-						<ul class="nav nav-tabs">
-					        <li class="active"><a data-toggle="tab" href="#results">Resultados</a></li>
-					        <li><a data-toggle="tab" href="#graphics">An&aacute;lise Visual</a></li>
-					    </ul>
-					    <div class="tab-content">
-					        <div id="results" class="tab-pane fade in active">
-					            <h3>Resultados</h3>
-					            
-					            <br />
-					            <br />
-					            <br />
-					            <br />
-					            <br />
-					            
-					        </div>
-					        <div id="graphics" class="tab-pane fade">
-					            <h3>An&aacute;lise Visual</h3>
-					            
-					            <br />
-					            <br />
-					            <br />
-					            <br />
-					            <br />
+					<ul class="nav nav-tabs">
+						<li class="active"><a data-toggle="tab" href="#results">Resultados</a></li>
+						<li><a data-toggle="tab" href="#graphics">An&aacute;lise
+								Visual</a></li>
+					</ul>
+					<div class="tab-content">
+						<div id="results" class="tab-pane fade in active">
+							<h3>Resultados</h3>
 
-					        </div>
-					    </div>
+							<!-- resultado -->
+							<div class="row thumbnail">
+								<div class="col-md-12 col-sm-6 thumbnail">
+									<div class="col-md-3">
+										<img class="img-responsive" width="300px"
+											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
+											alt="Bar do zé">
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<p>Endereço: R. da Mooca, 339 - Mooca, São Paulo - SP,
+											03104-000</p>
+										<p>Telefone: (11) 3208-8383</p>
+										<p>Horas: Aberto hoje · 06:00 – 22:00</p>
+										<p>Descricao: Bar espaçoso animado por bandas de gêneros
+											musicais populares tem chope, destilados e comidinhas
+											brasileiras.</p>
 
-					</div>	
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<img  class="img-responsive"  width="300px" src="http://i.imgur.com/T1GXhfM.png"
+											alt="Bar do zé">
+										<p></p>
+										<p align="left">
+											<a href="#" class="btn btn-primary" role="button">Mais
+												informações</a>
+										</p>
+									</div>
+									<div class="col-md-3">
+										<iframe
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
+											width="350" height="220" style="border: 0" allowfullscreen></iframe>
+									</div>
+								</div>
+								<div class="col-md-12 col-sm-6 thumbnail">
+									<div class="col-md-3">
+										<img class="img-responsive" width="300px"
+											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
+											alt="Bar do zé">
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<p>Endereço: R. da Mooca, 339 - Mooca, São Paulo - SP,
+											03104-000</p>
+										<p>Telefone: (11) 3208-8383</p>
+										<p>Horas: Aberto hoje · 06:00 – 22:00</p>
+										<p>Descricao: Bar espaçoso animado por bandas de gêneros
+											musicais populares tem chope, destilados e comidinhas
+											brasileiras.</p>
 
-					<div class="col-md-1"></div>
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<img  class="img-responsive"  width="300px" src="http://i.imgur.com/T1GXhfM.png"
+											alt="Bar do zé">
+										<p></p>
+										<p align="left">
+											<a href="#" class="btn btn-primary" role="button">Mais
+												informações</a>
+										</p>
+									</div>
+									<div class="col-md-3">
+										<iframe
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
+											width="350" height="220" style="border: 0" allowfullscreen></iframe>
+									</div>
+								</div>
+								<div class="col-md-12 col-sm-6 thumbnail">
+									<div class="col-md-3">
+										<img class="img-responsive" width="300px"
+											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
+											alt="Bar do zé">
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<p>Endereço: R. da Mooca, 339 - Mooca, São Paulo - SP,
+											03104-000</p>
+										<p>Telefone: (11) 3208-8383</p>
+										<p>Horas: Aberto hoje · 06:00 – 22:00</p>
+										<p>Descricao: Bar espaçoso animado por bandas de gêneros
+											musicais populares tem chope, destilados e comidinhas
+											brasileiras.</p>
+
+									</div>
+									<div class="col-md-3">
+										<h3>Bar do zé</h3>
+										<img  class="img-responsive"  width="300px" src="http://i.imgur.com/T1GXhfM.png"
+											alt="Bar do zé">
+										<p></p>
+										<p align="left">
+											<a href="#" class="btn btn-primary" role="button">Mais
+												informações</a>
+										</p>
+									</div>
+									<div class="col-md-3">
+										<iframe
+											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
+											width="350" height="220" style="border: 0" allowfullscreen></iframe>
+									</div>
+								</div>
+
+
+
+							</div>
+
+							<!-- tabela de resultados -->
+
+						</div>
+						<div id="graphics" class="tab-pane fade">
+							<h3>An&aacute;lise Visual</h3>
+
+							<br /> <br /> <br /> <br /> <br />
+
+						</div>
+					</div>
 
 				</div>
 
@@ -87,7 +196,12 @@
 		<script type="text/javascript" src="vendors/jquery/jquery-1.11.3.min.js"></script>
 		<script type="text/javascript" src="vendors/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="resources/js/main.js"></script>
+<<<<<<< HEAD
 		<script type="text/javascript" src="resources/js/teste.js"></script>
 		
+=======
+
+
+>>>>>>> 0af14827fabad9453c33cbc6257afc5323808137
 	</body>
 </html>

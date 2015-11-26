@@ -1,14 +1,25 @@
+var GoogleApiKey = "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs";
+var GoogleGeoLocationCurrentPosition = null;
+
 $(document).ready(function(){
 
 	$("#btn-main").click(function(){
 
 		$("div#result").fadeIn();
+		var query = $("input#busca").val();
+		nearbySearch(query);
 
 	});
 
 	check();
 
 });
+
+// customize the default events
+window.onload = function() {
+	getUserGeoLocation();
+}
+
 
 function check() {
 
@@ -25,12 +36,11 @@ function check() {
  * Latitude and Longitude
  */
 function getUserGeoLocation() {
-	var startPos;
 	var success = function(position) {
-    	startPos = position;
-    	
-    	console.log("latitude : " + startPos.coords.latitude);
-    	console.log("longitude : " + startPos.coords.longitude);
+    	GoogleGeoLocationCurrentPosition = position;
+    	console.log("Retrieve User Coordinates")
+    	console.log("Latitude : " + position.coords.latitude);
+    	console.log("Longitude : " + position.coords.longitude);
   	};
   	
   	var error = function(error) {
@@ -42,10 +52,34 @@ function getUserGeoLocation() {
 	    //   3: timed out
   	};
 
-  	navigator.geolocation.getCurrentPosition(success, error);
+  	var options = {
+  		maximumAge: 5 * 60 * 1000,
+  		timeout: 10 * 1000,
+  		enableHighAccuracy: true
+  	};
+
+  	navigator.geolocation.getCurrentPosition(success, error, options);
 }
 
-// customize the default events
-window.onload = function() {
-	getUserGeoLocation();
+function nearbySearch(query) {
+	$.ajax({
+	  	dataType: "json",
+	  	url: getNearbySearchUrl(query),
+	  	data: data,
+	  	success: function(data){
+	  		console.log("success");
+			console.log(data);
+	  	}
+	});
+}
+
+function getNearbySearchUrl(query) {
+	var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+	url += "location=" + GoogleGeoLocationCurrentPosition.coords.latitude + "," + GoogleGeoLocationCurrentPosition.coords.longitude;
+	url += "&radius=5000&query=" + query;
+	url += "&key=" + GoogleApiKey;
+
+	console.log("getNearbySearchUrl("+query+") -> " + url);
+
+	return url;
 }
