@@ -35,9 +35,9 @@
 		sksort($arr["result"],"rating",false);
 
 		$limit = 5;
-		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
+		for( $i=0; $i<sizeof($arr["results"]); $i++ ) {
 			if( $i < $limit ) {
-				$result["google"]["result"][$i] = $arr["result"][$i];
+				$result["google"]["result"][$i] = $arr["results"][$i];
 			} else {
 				break;
 			}
