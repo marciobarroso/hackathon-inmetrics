@@ -25,7 +25,7 @@
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 
-		$status = $xml->children("status");
+		$status = $xml->{"status"};
 		
 		print_r($xml->asXML());
 
