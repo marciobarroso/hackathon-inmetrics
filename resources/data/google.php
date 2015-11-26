@@ -32,20 +32,7 @@
 		$result["google"]["status"] = "OK"; 
 		$result["google"]["result"] = array();
 
-		$sortArr = array();
-
-		foreach( $arr["result"] as $result){ 
-		    foreach($result as $key=>$value){ 
-		        if(!isset($sortArray[$key])){ 
-		            $sortArray[$key] = array(); 
-		        } 
-		        $sortArray[$key][] = $value; 
-		    } 
-		} 
-
-		$orderby = "rating"; //change this to whatever key you want from the array
-
-		array_multisort($sortArray[$orderby],SORT_DESC,$arr["result"]);
+		sksort($arr["result"],"rating",false);
 
 		$limit = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
@@ -57,6 +44,34 @@
 		}
 
 		print_r($result);
+	}
+
+	function sksort(&$array, $subkey="id", $sort_ascending=false) {
+
+	    if (count($array))
+	        $temp_array[key($array)] = array_shift($array);
+
+	    foreach($array as $key => $val){
+	        $offset = 0;
+	        $found = false;
+	        foreach($temp_array as $tmp_key => $tmp_val)
+	        {
+	            if(!$found and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
+	            {
+	                $temp_array = array_merge(    (array)array_slice($temp_array,0,$offset),
+	                                            array($key => $val),
+	                                            array_slice($temp_array,$offset)
+	                                          );
+	                $found = true;
+	            }
+	            $offset++;
+	        }
+	        if(!$found) $temp_array = array_merge($temp_array, array($key => $val));
+	    }
+
+	    if ($sort_ascending) $array = array_reverse($temp_array);
+
+	    else $array = $temp_array;
 	}
 
 	function error() {
