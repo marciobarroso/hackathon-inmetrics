@@ -10,6 +10,12 @@ $(document).ready(function(){
 
 });
 
+// customize the default events
+window.onload = function() {
+	getUserGeoLocation();
+}
+
+
 function check() {
 
 	if (navigator.geolocation) {
@@ -28,9 +34,9 @@ function getUserGeoLocation() {
 	var startPos;
 	var success = function(position) {
     	startPos = position;
-    	
-    	console.log("latitude : " + startPos.coords.latitude);
-    	console.log("longitude : " + startPos.coords.longitude);
+    	console.log("Retrieve User Coordinates")
+    	console.log("Latitude : " + startPos.coords.latitude);
+    	console.log("Longitude : " + startPos.coords.longitude);
   	};
   	
   	var error = function(error) {
@@ -43,9 +49,4 @@ function getUserGeoLocation() {
   	};
 
   	navigator.geolocation.getCurrentPosition(success, error);
-}
-
-// customize the default events
-window.onload = function() {
-	getUserGeoLocation();
 }
