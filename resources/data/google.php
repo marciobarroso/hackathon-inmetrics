@@ -8,7 +8,7 @@
 
 	define("GOOGLE_API_KEY", "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs");
 
-	function search() {
+	function nearby() {
 		$query = $_GET["query"];
 		$latitude = $_GET["latitude"];
 		$longitude = $_GET["longitude"];
@@ -19,10 +19,10 @@
 		$url .= "&key=" . GOOGLE_API_KEY;
 
 		$xml = file_get_contents($url);
-		success($xml);
+		success($xml, "nearby");
 	}
 
-	function success($xml) {
+	function success($xml, $method) {
 		$xml = new SimpleXMLElement($xml);
 		
 		$json = json_encode($xml);
@@ -43,7 +43,7 @@
 			}
 		}
 
-		$xml = new SimpleXMLElement("<google />");
+		$xml = new SimpleXMLElement("<google-$method />");
 		array_to_xml($arr, $xml);
 		echo $xml->asXML();
 	}
@@ -101,8 +101,8 @@
 
 	if( isset($_GET["action"]) ) {
 		switch( $_GET["action"] ) {
-			case "search":
-				search();
+			case "nearby":
+				nearby();
 				break;
 			default:
 				error();
