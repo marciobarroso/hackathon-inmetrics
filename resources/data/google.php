@@ -47,12 +47,6 @@
 			$result["google"]["result"][] = $arr["result"][$index];
 		}
 
-		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
-			if( $i < $limit ) {
-				$result["google"]["result"][$i] = $arr["result"][$i];
-			}
-		}
-
 		print_r($result);
 	}
 
