@@ -27,15 +27,21 @@
 		
 		$json = json_encode($xml);
 		$arr = json_decode($json, TRUE);
+		$result = array();
+		$result["google"] = array();
+		$result["google"]["status"] = "OK"; 
+		$result["google"]["result"] = array();
 
 		$limit = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
-			if( $i >= $limit ) {
-				unset($arr["result"][$i]);
+			if( $i < $limit ) {
+				$result["google"]["result"][$i] = $arr["result"];
+			} else {
+				break;
 			}
 		}
 
-		print_r($arr);
+		print_r($result);
 	}
 
 	function error() {
