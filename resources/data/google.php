@@ -28,6 +28,13 @@
 		$json = json_encode($xml);
 		$arr = json_decode($json, TRUE);
 
+		$limit = 5;
+		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
+			if( $i >= $limit ) {
+				unset($arr["result"][$i]);
+			}
+		}
+
 		print_r($arr);
 	}
 
