@@ -56,7 +56,7 @@
 	        $found = false;
 	        foreach($temp_array as $tmp_key => $tmp_val)
 	        {
-	            if(!$found and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
+	            if(!$found and isset($val[$subkey]) and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
 	            {
 	                $temp_array = array_merge(    (array)array_slice($temp_array,0,$offset),
 	                                            array($key => $val),
