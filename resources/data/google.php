@@ -32,8 +32,7 @@
 		if( count($xml->status) === 1 ) {
 			foreach( $xml->children() as $child ) {
 				if( $child->getName() === "result" && $count++ >= $limit ) {
-					$dom = dom_import_simplexml($child);
-					$dom->parentNode->removeChild($dom);
+					unset($child);
 				}
 			}	
 			echo $xml->asXML();	
