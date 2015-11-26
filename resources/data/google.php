@@ -43,7 +43,10 @@
 			}
 		}
 
-		print_r($result);
+		$arr = array_values($arr);
+		$xml = new SimpleXMLElement("<google />");
+		array_walk_recursive($arr, array ($xml, 'addChild'));
+		echo $xml->asXML();
 	}
 
 	function sksort(&$array, $subkey="id", $sort_ascending=false) {
