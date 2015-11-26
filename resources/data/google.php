@@ -26,19 +26,9 @@
 		$xml = new SimpleXMLElement($xml);
 		$newXML = new SimpleXMLElement("<google />");
 
-		print_r($xml->status);
+		print_r(dom_import_simplexml($xml->status);
 
-		$count = 0;
-		$limit = 5;
-		if( count($xml->status) === 1 ) {
-			$dom = dom_import_simplexml($newXML);
-			$dom->appendChild(new SimpleXMLElement("<status>OK</status>"));
-
-			foreach( $xml->result as $result ) {
-				print_r($result);
-			}	
-			echo $newXML->asXML();	
-		}
+		echo $xml->asXML();
 	}
 
 	function error() {
