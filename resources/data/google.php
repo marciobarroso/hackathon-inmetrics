@@ -34,7 +34,7 @@
 
 		sksort($arr["result"],"rating",false);
 
-		$limit = 5;
+		$limit = 10;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
 			if( $i < $limit ) {
 				$result["google"]["result"][$i] = $arr["result"][$i];
@@ -56,7 +56,7 @@
 	        $found = false;
 	        foreach($temp_array as $tmp_key => $tmp_val)
 	        {
-	            if(!$found and isset($val[$subkey]) and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
+	            if(!$found and isset($val[$subkey]) and isset($tmp_val[$subkey]) and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
 	            {
 	                $temp_array = array_merge(    (array)array_slice($temp_array,0,$offset),
 	                                            array($key => $val),
