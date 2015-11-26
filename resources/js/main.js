@@ -1,4 +1,3 @@
-var GoogleApiKey = "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs";
 var GoogleGeoLocationCurrentPosition = null;
 var GoogleSearchResult = null;
 
@@ -77,12 +76,7 @@ function nearbySearch(query) {
 }
 
 function getNearbySearchUrl(query) {
-	var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
-	url += "location=" + GoogleGeoLocationCurrentPosition.coords.latitude + "," + GoogleGeoLocationCurrentPosition.coords.longitude;
-	url += "&radius=5000&query=" + query;
-	url += "&key=" + GoogleApiKey;
-
-	console.log("URL -> " + url);
-
+	var url = "http://ec2-52-91-21-223.compute-1.amazonaws.com/resources/data/google.php?action=nearby&query=" + query;
+	url += "latitude=" + GoogleGeoLocationCurrentPosition.coords.latitude + "&longitude=" + GoogleGeoLocationCurrentPosition.coords.longitude;
 	return url;
 }
