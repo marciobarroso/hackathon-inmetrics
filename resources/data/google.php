@@ -3,6 +3,9 @@
 	// all responses must be an XML
 	// header('Content-type: application/xml');
 
+	error_reporting(E_ALL);
+	ini_set('display_errors', 1);
+
 	define("GOOGLE_API_KEY", "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs");
 
 	function search() {
