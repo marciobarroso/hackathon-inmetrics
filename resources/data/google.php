@@ -32,7 +32,7 @@
 		$result["google"]["status"] = "OK"; 
 		$result["google"]["result"] = array();
 
-		$arr["result"] = dksort($arr["result"], "rating");
+		$arr["result"] = usort($arr["result"], "rating");
 
 		$limit = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
@@ -44,22 +44,6 @@
 		}
 
 		print_r($result);
-	}
-
-	function dksort($array, $case){
-	    $a = array();
-	    if(array_key_exists($case,$array)){
-	        $a[$case] = $array[$case];
-	        foreach($array as $key=>$val){
-	            if($case==$key){
-
-	            }else{
-	                $a[$key] = $array[$key];
-	            }
-	        }
-	    }
-
-	    return $a;
 	}
 
 	function error() {
