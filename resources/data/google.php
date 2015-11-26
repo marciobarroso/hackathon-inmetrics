@@ -16,12 +16,18 @@
 		$url .= "&key=" . GOOGLE_API_KEY;
 
 		$xml = file_get_contents($url);
-		var_dump($xml);
+		success($xml);
+	}
+
+	function success($xml) {
+		$xml = new SimpleXMLElement($xml);
+		echo $xml->asXML();	
 	}
 
 	function error() {
 		$result = "<google>\n\t<result>error</result>\n</google>";
-		var_dump($result);
+		$xml = new SimpleXMLElement($result);
+		echo $xml->asXML();	
 	}
 
 	if( isset($_GET["action"]) ) {
