@@ -24,9 +24,6 @@
 
 	function success($json) {
 		$arr = json_decode($json, TRUE);
-
-		print_r($arr);
-
 		$result = array();
 		$result["google"] = array();
 		$result["google"]["status"] = "OK"; 
@@ -42,8 +39,6 @@
 				break;
 			}
 		}
-
-		print_r($result);
 
 		$json = json_encode($result);
 		print($json);
