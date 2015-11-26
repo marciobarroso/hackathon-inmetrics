@@ -41,7 +41,7 @@
 		}
 
 		$json = json_encode($arr);
-		echo json_encode($json);
+		print($json);
 	}
 
 	function array_to_xml($template_info, &$xml_template_info) {
@@ -91,7 +91,7 @@
 
 	function error() {
 		$json = {"error":true};
-		echo json_encode($json);	
+		print($json);
 	}
 
 	if( isset($_GET["action"]) ) {
