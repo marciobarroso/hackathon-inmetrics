@@ -65,7 +65,7 @@ function getUserGeoLocation() {
 function nearbySearch(query) {
 	$.ajax({
 		type: "GET",
-	  	dataType: "jsonp",
+	  	dataType: "xml",
 	  	url: getNearbySearchUrl(query),
 	  	cache: false,
 	  	success: function(response){
@@ -77,7 +77,7 @@ function nearbySearch(query) {
 }
 
 function getNearbySearchUrl(query) {
-	var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+	var url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?";
 	url += "location=" + GoogleGeoLocationCurrentPosition.coords.latitude + "," + GoogleGeoLocationCurrentPosition.coords.longitude;
 	url += "&radius=5000&query=" + query;
 	url += "&key=" + GoogleApiKey;
