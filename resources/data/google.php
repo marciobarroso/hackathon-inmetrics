@@ -22,7 +22,7 @@
 		success($json);
 	}
 
-	function success($xml) {
+	function success($json) {
 		$arr = json_decode($json, TRUE);
 		$result = array();
 		$result["google"] = array();
