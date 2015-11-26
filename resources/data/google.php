@@ -31,7 +31,7 @@
 
 		sksort($arr["result"],"rating",false);
 
-		$limit = 10;
+		$limit = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
 			if( $i < $limit ) {
 				$result["google"]["result"][$i] = $arr["result"][$i];
