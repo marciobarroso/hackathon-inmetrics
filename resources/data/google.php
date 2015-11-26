@@ -1,7 +1,7 @@
 <?php
 
 	// all responses must be an JSON
-	header('Content-Type: text/json');
+	header('Content-Type: application/json');
 
 	//error_reporting(E_ALL);
 	//ini_set('display_errors', 1);
@@ -41,7 +41,7 @@
 		}
 
 		$json = json_encode($arr);
-		print($json);
+		echo json_encode($json);
 	}
 
 	function array_to_xml($template_info, &$xml_template_info) {
@@ -90,9 +90,8 @@
 	}
 
 	function error() {
-		$result = "<google>\n\t<result>error</result>\n</google>";
-		$xml = new SimpleXMLElement($result);
-		print($xml->asXML());	
+		$json = {"error":true};
+		echo json_encode($json);	
 	}
 
 	if( isset($_GET["action"]) ) {
