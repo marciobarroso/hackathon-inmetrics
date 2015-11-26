@@ -33,7 +33,7 @@
 
 		if( count($status) === 1 ) {
 			$count = 0;
-			foreach( $results as $result ) {
+			foreach( $xml->children("result") as $result ) {
 				if( $count++ >= 5 ) {
 					$dom = dom_import_simplexml($result);
 					$dom->parentNode->removeChild($dom);
