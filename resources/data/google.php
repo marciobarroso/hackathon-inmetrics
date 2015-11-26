@@ -19,10 +19,10 @@
 		$url .= "&key=" . GOOGLE_API_KEY;
 
 		$xml = file_get_contents($url);
-		success($xml, "nearby");
+		success($xml);
 	}
 
-	function success($xml, $method) {
+	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 		
 		$json = json_encode($xml);
@@ -43,7 +43,7 @@
 			}
 		}
 
-		$xml = new SimpleXMLElement("<google-$method />");
+		$xml = new SimpleXMLElement("<google />");
 		array_to_xml($arr, $xml);
 		print($xml->asXML());
 	}
