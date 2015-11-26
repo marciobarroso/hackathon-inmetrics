@@ -25,7 +25,7 @@
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 		
-		$json = json_decode($xml);
+		$json = json_encode($xml);
 		$arr = json_decode($json, TRUE);
 
 		print_r($arr);
