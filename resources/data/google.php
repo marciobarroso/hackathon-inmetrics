@@ -6,8 +6,12 @@
 	//error_reporting(E_ALL);
 	//ini_set('display_errors', 1);
 
-	define("GOOGLE_API_KEY", "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs");
-
+	// Production 
+	// define("GOOGLE_API_KEY", "AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk");
+	
+	// Dev
+	define("GOOGLE_API_KEY", "AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs");
+	
 	function nearby() {
 		$query = $_GET["query"];
 		$latitude = $_GET["latitude"];
@@ -19,10 +23,7 @@
 		$url .= "&key=" . GOOGLE_API_KEY;
 
 		$xml = file_get_contents($url);
-		success($xml);
-	}
-
-	function success($xml) {
+		
 		$xml = new SimpleXMLElement($xml);
 		$json = json_encode($xml);
 		$arr = json_decode($json, TRUE);
@@ -42,25 +43,41 @@
 			}
 		}
 
-		$json = json_encode($result);
-		print($json);
-	}
-
-	function array_to_xml($template_info, &$xml_template_info) {
-		foreach($template_info as $key => $value) {
-			if(is_array($value)) {
-				if(!is_numeric($key)){
-					$subnode = $xml_template_info->addChild("$key");
-					array_to_xml($value, $subnode);
-				}
-				else{
-					array_to_xml($value, $xml_template_info);
-				}
-			}
-			else {
-				$xml_template_info->addChild("$key","$value");
+		// load photos
+		for( $i=0; $i < sizeof($result["google"]["result"]); $i++ ) {
+			if( isset($result["google"]["result"][$i]["photo"]) ) {
+				$photo = array();
+				$photo["url"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300);
+				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
+				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
+				$result["google"]["result"][$i]["photo"] = $photo;
 			}
 		}
+		
+		//print_r($result);
+		$json = json_encode($result);
+		print($json);		
+	}
+
+	function getPlaceById($placeId) {
+		$url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=" . GOOGLE_API_KEY;
+		$json = file_get_contents($url);
+		return $json;
+	}
+
+	function getPhotoByReference($reference, $maxwidth) {
+		$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth";
+		$url .= "&photoreference=$reference&key=" . GOOGLE_API_KEY;
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_HEADER, true);
+		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Must be set to true so that PHP follows any "Location:" header
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$a = curl_exec($ch); // $a will contain all headers
+		$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); // This is what you need, it will return you the last effective URL
+		return $url;
 	}
 
 	function sksort(&$array, $subkey="id", $sort_ascending=false) {
@@ -91,12 +108,7 @@
 	    else $array = $temp_array;
 	}
 
-	function error() {
-		$result = "<google>\n\t<result>error</result>\n</google>";
-		$xml = new SimpleXMLElement($result);
-		print($xml->asXML());	
-	}
-
+	// choose what method call
 	if( isset($_GET["action"]) ) {
 		switch( $_GET["action"] ) {
 			case "nearby":
