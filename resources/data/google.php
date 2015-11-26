@@ -36,12 +36,7 @@
 			$dom->appendChild($status);
 
 			foreach( $xml->result as $result ) {
-				if( $count++ < $limit ) {
-					$res=dom_import_simplexml($result);
-        			dom->appendChild($res);
-				} else {
-					break;
-				}
+				print_r($result);
 			}	
 			echo $newXML->asXML();	
 		}
