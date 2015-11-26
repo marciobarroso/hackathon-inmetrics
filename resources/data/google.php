@@ -47,6 +47,7 @@
 	}
 
 	function dksort($array, $case){
+	    $a = array();
 	    if(array_key_exists($case,$array)){
 	        $a[$case] = $array[$case];
 	        foreach($array as $key=>$val){
