@@ -33,11 +33,23 @@
 		$result["google"]["result"] = array();
 
 		$limit = 5;
+		$index = 0;
+		$rating = 0;
+		
+		while( sizeof($result["google"]["result"]) < 5 ) {
+			for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
+				if( $rating <= $arr["result"][$i]["rating"] && $index != $i ) {
+					$rating = $arr["result"][$i]["rating"];
+					$index = $i;
+				}
+			}
+
+			$result["google"]["result"][] = $arr["result"][$index];
+		}
+
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
 			if( $i < $limit ) {
 				$result["google"]["result"][$i] = $arr["result"][$i];
-			} else {
-				break;
 			}
 		}
 
