@@ -40,6 +40,8 @@
 			}
 		}
 
+		print_r($result);
+
 		$json = json_encode($result);
 		print($json);
 	}
