@@ -27,19 +27,15 @@
 
 		$status = $xml->{"status"};
 		
-		print_r($xml->asXML());
+		print_r($xml->children("result"));
 
 		print_r($status);
 
 		if( count($status) === 1 ) {
-			$count = 0;
-			foreach( $xml->children("result") as $result ) {
-				if( $count++ >= 5 ) {
-					$dom = dom_import_simplexml($result);
-					$dom->parentNode->removeChild($dom);
-				}
-			}
-
+			while( count($xml->children("result")) > 5 ) {
+				$dom = dom_import_simplexml($result);
+				$dom->parentNode->removeChild($dom);
+			}	
 			//echo $xml->asXML();	
 		}
 	}
