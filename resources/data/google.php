@@ -44,7 +44,7 @@
 		}
 
 		$xml = new SimpleXMLElement("<google />");
-		array_to_xml($xml, $arr);
+		array_to_xml($arr, $xml);
 		echo $xml->asXML();
 	}
 
