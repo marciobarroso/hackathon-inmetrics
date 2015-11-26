@@ -27,6 +27,8 @@
 
 		$status = $xml->children("status","OK");
 		
+		print_r($xml->asXML());
+		
 		print_r($status);
 
 		if( count($status) === 1 ) {
