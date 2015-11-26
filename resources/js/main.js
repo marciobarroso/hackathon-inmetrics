@@ -62,17 +62,14 @@ function getUserGeoLocation() {
 }
 
 function nearbySearch(query) {
-	$.getJSON( getNearbySearchUrl(query), function() {
-		console.log("call google search api");	
-	})
-
-	.done(function(data){
-		console.log("success");
-		console.log(data);
-	})
-
-	.fail(function() {
-		console.log("failure");
+	$.ajax({
+	  	dataType: "json",
+	  	url: getNearbySearchUrl(query),
+	  	data: data,
+	  	success: function(data){
+	  		console.log("success");
+			console.log(data);
+	  	}
 	});
 }
 
