@@ -25,10 +25,10 @@
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 
-		$status = $xml->children("status","OK");
+		$status = $xml->children("status");
 		
 		print_r($xml->asXML());
-		
+
 		print_r($status);
 
 		if( count($status) === 1 ) {
