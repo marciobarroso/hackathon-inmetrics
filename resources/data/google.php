@@ -25,19 +25,18 @@
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 
-		$newXml = new SimpleXMLElement("<google />");
-
 		$status = $xml->children("status","OK");
 		if( count($status) === 1 ) {
-			$results = $xml->children("result");
 			$count = 0;
 			foreach( $results as $result ) {
-				if( $count++ >= 5 ) break;
-
-				$newXml->addChild($result);
+				if( $count++ >= 5 ) {
+					//$dom = dom_import_simplexml($result);
+					//$dom->parentNode->removeChild($dom);
+					unset($result);
+				}
 			}
 
-			echo $newXml->asXML();	
+			echo $xml->asXML();	
 		} else {
 			echo "Error";
 		}
