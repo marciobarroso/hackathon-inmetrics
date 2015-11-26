@@ -40,9 +40,7 @@
 			}
 		}
 
-		$xml = new SimpleXMLElement("<google />");
-		array_to_xml($arr, $xml);
-		$json = json_encode($xml->asXML());
+		$json = json_encode($arr);
 		print($json);
 	}
 
