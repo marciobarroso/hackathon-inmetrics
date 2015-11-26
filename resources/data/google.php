@@ -21,6 +21,7 @@
 
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
+		echo $xml->count();
 		echo $xml->asXML();	
 	}
 
