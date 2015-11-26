@@ -90,8 +90,9 @@
 	}
 
 	function error() {
-		$json = {"error":true};
-		print($json);
+		$result = "<google>\n\t<result>error</result>\n</google>";
+		$xml = new SimpleXMLElement($result);
+		print($xml->asXML());	
 	}
 
 	if( isset($_GET["action"]) ) {
