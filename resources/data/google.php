@@ -25,17 +25,17 @@
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
 
-		$status = $xml->{"status"};
-		
-		print_r($xml->{"result"});
+		print_r($xml->result);
 
-		print_r($status);
+		print_r($xml->status);
 
-		if( count($status) === 1 ) {
-			while( count($xml->children("result")) > 5 ) {
-				$dom = dom_import_simplexml($result);
+		$count = 0;
+		if( count($xml->status) === 1 ) {
+			while( count($xml->result) > 5 ) {
+				$dom = dom_import_simplexml($xml->result[$count]);
 				$dom->parentNode->removeChild($dom);
-			}	
+			}
+			$count++;	
 			//echo $xml->asXML();	
 		}
 	}
