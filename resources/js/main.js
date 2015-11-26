@@ -65,7 +65,7 @@ function getUserGeoLocation() {
 function nearbySearch(query) {
 	$.ajax({
 		type: "GET",
-	  	dataType: "xml",
+	  	dataType: "xmlp",
 	  	url: getNearbySearchUrl(query),
 	  	cache: false,
 	  	success: function(response){
