@@ -10,7 +10,7 @@
 		$latitude = $_GET["latitude"];
 		$longitude = $_GET["longitude"];
 
-		$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?";
+		$url = "https://maps.googleapis.com/maps/api/place/textsearch/xml?";
 		$url .= "location=" . $latitude . "," . $longitude;
 		$url .= "&radius=5000&query=" . $query;
 		$url .= "&key=" . GOOGLE_API_KEY;
