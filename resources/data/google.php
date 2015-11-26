@@ -21,8 +21,23 @@
 
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
-		echo $xml->count();
-		echo $xml->asXML();	
+
+		$newXml = new SimpleXMLElement("<google />");
+
+		$status = $xml->children("status","OK");
+		if( count($status) === 1 ) {
+			$results = $xml->children("result");
+			$count = 0;
+			foreach( $results as $result ) {
+				if( $count++ >= 5 ) break;
+
+				$newXml->addChild($result);
+			}
+
+			echo $newXml->asXML();	
+		} else {
+			echo "Error";
+		}
 	}
 
 	function error() {
