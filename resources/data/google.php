@@ -32,7 +32,7 @@
 		$limit = 5;
 		if( count($xml->status) === 1 ) {
 			$dom = dom_import_simplexml($newXML);
-			$dom->appendChild("<status>OK</status>");
+			$dom->appendChild(new SimpleXMLElement("<status>OK</status>"));
 
 			foreach( $xml->result as $result ) {
 				print_r($result);
