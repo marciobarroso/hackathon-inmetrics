@@ -43,7 +43,6 @@
 			}
 		}
 
-		$arr = array_values($arr);
 		$xml = new SimpleXMLElement("<google />");
 		array_walk_recursive($arr, array ($xml, 'addChild'));
 		echo $xml->asXML();
