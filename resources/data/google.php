@@ -24,19 +24,26 @@
 
 	function success($xml) {
 		$xml = new SimpleXMLElement($xml);
+		$newXML = new SimpleXMLElement("<google />");
 
 		print_r($xml->status);
 
 		$count = 0;
 		$limit = 5;
 		if( count($xml->status) === 1 ) {
+			$dom = dom_import_simplexml($newXML);
+			$status = dom_import_simplexml($xml->status[0]);
+			$dom->appendChild($status);
+
 			foreach( $xml->result as $result ) {
-				if( $count++ >= $limit ) {
-					$dom=dom_import_simplexml($result);
-        			$dom->parentNode->removeChild($dom);
+				if( $count++ < $limit ) {
+					$res=dom_import_simplexml($result);
+        			dom->appendChild($res);
+				} else {
+					break;
 				}
 			}	
-			echo $xml->asXML();	
+			echo $newXML->asXML();	
 		}
 	}
 
