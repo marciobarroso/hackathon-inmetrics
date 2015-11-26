@@ -1,5 +1,6 @@
 var GoogleApiKey = "AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs";
 var GoogleGeoLocationCurrentPosition = null;
+var GoogleSearchResult = null;
 
 $(document).ready(function(){
 
@@ -63,12 +64,14 @@ function getUserGeoLocation() {
 
 function nearbySearch(query) {
 	$.ajax({
-	  	dataType: "json",
+		type: "GET",
+	  	dataType: "jsonp",
 	  	url: getNearbySearchUrl(query),
-	  	data: data,
-	  	success: function(data){
+	  	cache: false,
+	  	success: function(response){
+	  		GoogleSearchResult = response;
 	  		console.log("success");
-			console.log(data);
+			console.log(GoogleSearchResult);
 	  	}
 	});
 }
