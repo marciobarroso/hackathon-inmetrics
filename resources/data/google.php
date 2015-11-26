@@ -1,7 +1,7 @@
 <?php
 
-	// all responses must be an XML
-	header('Content-Type: text/xml');
+	// all responses must be an JSON
+	header('Content-Type: text/json');
 
 	//error_reporting(E_ALL);
 	//ini_set('display_errors', 1);
@@ -13,19 +13,16 @@
 		$latitude = $_GET["latitude"];
 		$longitude = $_GET["longitude"];
 
-		$url = "https://maps.googleapis.com/maps/api/place/textsearch/xml?";
+		$url = "https://maps.googleapis.com/maps/api/place/textsearch/json?";
 		$url .= "location=" . $latitude . "," . $longitude;
 		$url .= "&radius=5000&query=" . $query;
 		$url .= "&key=" . GOOGLE_API_KEY;
 
-		$xml = file_get_contents($url);
-		success($xml);
+		$json = file_get_contents($url);
+		success($json);
 	}
 
 	function success($xml) {
-		$xml = new SimpleXMLElement($xml);
-		
-		$json = json_encode($xml);
 		$arr = json_decode($json, TRUE);
 		$result = array();
 		$result["google"] = array();
@@ -45,7 +42,8 @@
 
 		$xml = new SimpleXMLElement("<google />");
 		array_to_xml($arr, $xml);
-		print($xml->asXML());
+		$json = json_encode($xml->asXML());
+		print($json);
 	}
 
 	function array_to_xml($template_info, &$xml_template_info) {
