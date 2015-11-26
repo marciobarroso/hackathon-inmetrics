@@ -43,10 +43,26 @@
 			}
 		}
 
-		$arr = array_keys($arr);
 		$xml = new SimpleXMLElement("<google />");
-		array_walk_recursive($arr, array ($xml, 'addChild'));
+		array_to_xml($xml, $arr);
 		echo $xml->asXML();
+	}
+
+	function array_to_xml($template_info, &$xml_template_info) {
+		foreach($template_info as $key => $value) {
+			if(is_array($value)) {
+				if(!is_numeric($key)){
+					$subnode = $xml_template_info->addChild("$key");
+					array_to_xml($value, $subnode);
+				}
+				else{
+					array_to_xml($value, $xml_template_info);
+				}
+			}
+			else {
+				$xml_template_info->addChild("$key","$value");
+			}
+		}
 	}
 
 	function sksort(&$array, $subkey="id", $sort_ascending=false) {
