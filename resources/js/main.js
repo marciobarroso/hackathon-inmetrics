@@ -78,5 +78,6 @@ function nearbySearch(query) {
 function getNearbySearchUrl(query) {
 	var url = "http://ec2-52-91-21-223.compute-1.amazonaws.com/resources/data/google.php?action=nearby&query=" + query;
 	url += "latitude=" + GoogleGeoLocationCurrentPosition.coords.latitude + "&longitude=" + GoogleGeoLocationCurrentPosition.coords.longitude;
+	console.log("url : " + url);
 	return url;
 }
