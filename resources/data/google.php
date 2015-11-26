@@ -1,7 +1,7 @@
 <?php
 
 	// all responses must be an XML
-	header('Content-type: application/xml');
+	header('Content-Type: text/xml');
 
 	//error_reporting(E_ALL);
 	//ini_set('display_errors', 1);
@@ -45,7 +45,7 @@
 
 		$xml = new SimpleXMLElement("<google-$method />");
 		array_to_xml($arr, $xml);
-		echo $xml->asXML();
+		print($xml->asXML());
 	}
 
 	function array_to_xml($template_info, &$xml_template_info) {
@@ -96,7 +96,7 @@
 	function error() {
 		$result = "<google>\n\t<result>error</result>\n</google>";
 		$xml = new SimpleXMLElement($result);
-		echo $xml->asXML();	
+		print($xml->asXML());	
 	}
 
 	if( isset($_GET["action"]) ) {
