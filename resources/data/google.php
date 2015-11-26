@@ -26,6 +26,9 @@
 		$xml = new SimpleXMLElement($xml);
 
 		$status = $xml->children("status","OK");
+		
+		print_r($status);
+
 		if( count($status) === 1 ) {
 			$count = 0;
 			foreach( $results as $result ) {
@@ -35,9 +38,7 @@
 				}
 			}
 
-			echo $xml->asXML();	
-		} else {
-			echo "Error";
+			//echo $xml->asXML();	
 		}
 	}
 
