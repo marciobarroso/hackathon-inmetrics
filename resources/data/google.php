@@ -32,7 +32,20 @@
 		$result["google"]["status"] = "OK"; 
 		$result["google"]["result"] = array();
 
-		$arr["result"] = usort($arr["result"], "rating");
+		$sortArr = array();
+
+		foreach( $arr["result"] as $result){ 
+		    foreach($result as $key=>$value){ 
+		        if(!isset($sortArray[$key])){ 
+		            $sortArray[$key] = array(); 
+		        } 
+		        $sortArray[$key][] = $value; 
+		    } 
+		} 
+
+		$orderby = "rating"; //change this to whatever key you want from the array
+
+		array_multisort($sortArray[$orderby],SORT_DESC,$arr["result"]);
 
 		$limit = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
