@@ -42,10 +42,14 @@ function googleApiNearbySearch(query) {
 	  		GOOGLE_API_RESULTS = response;
 	  		console.log("success");
 			console.log(GOOGLE_API_RESULTS);
-			fillResultList();
 
-			// show the result panel
-			$("div#result").fadeIn();
+			if( GOOGLE_API_RESULTS.google.result === undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
+				fillResultList();
+				$("div#result").fadeIn();
+			} else {
+				alert("Cota free da Google API esgotada");
+			}
+
 			loading();
 	  	}
 	});
