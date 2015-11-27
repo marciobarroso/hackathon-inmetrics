@@ -1,14 +1,24 @@
 <?php
 
 	// SET TO PRD OR DEV
-	define("CONFIG_ENVIRONMENT", "DEV");
-	define("CONFIG_DEBUG", CONFIG_ENVIRONMENT === "PRD" ? false : true);
+	define("PRODUCTION","PRODUCTION");
+	define("DEVELOPMENT","DEVELOPMENT");
+	define("TRUE", "TRUE");
+	define("FALSE", "FALSE");
+	define("CONFIG_GOOGLE_API_KEY_DEV","AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs");
+	define("CONFIG_GOOGLE_API_KEY_PRD","AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk");
+
+
+	// CHANGE HERE
+	define("CONFIG_ENVIRONMENT", DEVELOPMENT);
+	//define("CONFIG_DEBUG", CONFIG_ENVIRONMENT === PRODUCTION ? FALSE : TRUE);
+	define("CONFIG_DEBUG", FALSE);
 
 	// constants for APIS
-	define("CONFIG_GOOGLE_API_KEY", CONFIG_ENVIRONMENT === "PRD" ? "AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk" : "AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs");
+	define("CONFIG_GOOGLE_API_KEY", CONFIG_ENVIRONMENT === PRODUCTION ? CONFIG_GOOGLE_API_KEY_PRD : CONFIG_GOOGLE_API_KEY_DEV);
 	
 	// enable error messages
-	if( CONFIG_ENVIRONMENT !== "PRD" ) {
+	if( CONFIG_ENVIRONMENT === DEVELOPMENT && CONFIG_DEBUG === TRUE ) {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 

@@ -43,11 +43,16 @@ function googleApiNearbySearch(query) {
 	  		console.log("success");
 			console.log(GOOGLE_API_RESULTS);
 			fillResultList();
+
+			// show the result panel
+			$("div#result").fadeIn();
+			loading();
 	  	}
 	});
 }
 
 function fillResultList() {
+	console.log("fill result list");
 	var json = GOOGLE_API_RESULTS;
 	if( json.google.status === "OK" ) {
 		var selectors = ["one","two","three","four","five","six","seven","eight","nine","then"];
@@ -59,15 +64,15 @@ function fillResultList() {
 	}
 
 	// enable slick plugin
-	$("div.thumbnail").each(function() {
-		$(this).slick({
-			dots: true,
-			infinite: true,
-			speed: 500,
-			fade: true,
-			cssEase: 'linear'
-		});
-	});
+//	$("div.thumbnail").each(function() {
+//		$(this).slick({
+//			dots: false,
+//			infinite: true,
+//			speed: 500,
+//			fade: true,
+//			cssEase: 'linear'
+//		});
+//	});
 }
 
 function resetDivResult(selector) {
@@ -115,6 +120,12 @@ function createDivResult(selector) {
 function fillResult(result, selector) {
 	if( result.photos === undefined ) return;
 
+	var noImage = $("<img />")
+		.attr("src","resources/images/no-image.jpg")
+		.attr("class","img-responsive")
+		.attr("height","200px")
+		.attr("width","300px");
+
 	// reset
 	$(selector + " .thumbnail").html("");
 	$(selector + " img.photo").prop("alt", "");
@@ -123,18 +134,16 @@ function fillResult(result, selector) {
 	$(selector + " .phone").html("");
 	$(selector + " .website").html("");
 
-	// photo
 	var parent = $(selector + " .thumbnail");
-	for( var i=0; i<result.photos.length; i++ ) {
+	if( result.photos.length > 1 ) {
 		var img = $("<img />");
 		$(img).prop("class","img-responsive");
 		$(img).prop("height","200px");
 		$(img).prop("alt",result.name);
-		$(img).prop("src", result.photos[i].url);
-		
-		var div = $("<div></div>");
-		$(div).append(img);
-		$(parent).append(div);
+		$(img).prop("src", result.photos[0].url);
+		$(parent).append(img);	
+	} else {
+		$(parent).append(noImage);
 	}
 
 	// informations

@@ -6,8 +6,9 @@ $(document).ready(function(){
 
 	// attach the event click on button
 	$("#btn-main").click(function(){
-		$("div#result").fadeIn();
 		var query = $("input#busca").val();
+		loading();
+		$("div#result").fadeOut();
 		googleApiNearbySearch(query);
 	});
 
@@ -23,4 +24,8 @@ window.onload = function() {
 function mainEnableControls() {
 	$("input#busca").prop("disabled",false);
 	$("#btn-main").prop("disabled",false);
+}
+
+function loading() {
+	$("img.loading").toggle();
 }
