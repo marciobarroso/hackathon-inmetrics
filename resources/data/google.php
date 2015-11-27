@@ -44,10 +44,21 @@
 		for( $i=0; $i < sizeof($result["google"]["result"]); $i++ ) {
 			if( isset($result["google"]["result"][$i]["photo"]) ) {
 				$photo = array();
-				$photo["url"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300);
-				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
-				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
-				$result["google"]["result"][$i]["photo"] = $photo;
+				$json = getPlaceById($result["google"]["result"][$i]["place_id"]);
+				$detail = json_decode($json, TRUE);
+
+				foreach( $detail["result"]["photos"] as $p ) {
+					$arr = array();
+					$arr["url"] = getPhotoByReference($p["photo_reference"], 300);
+					$arr["photo_reference"] = $p["photo_reference"];
+					$photo[] = $arr;
+				}
+
+				// load other details
+				$result["google"]["result"][$i]["phone_number"] = $detail["result"]["formatted_phone_number"];
+				$result["google"]["result"][$i]["website"] = $detail["result"]["website"];
+				$result["google"]["result"][$i]["photos"] = $photo;
+				unset($result["google"]["result"][$i]["photo"]);
 			}
 		}
 		
