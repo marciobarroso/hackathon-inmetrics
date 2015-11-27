@@ -1,26 +1,23 @@
 <?php
 
+	include "config.php";
+
 	// all responses must be an JSON
 	header('Content-Type: text/json');
-
-	//error_reporting(E_ALL);
-	//ini_set('display_errors', 1);
-
-	// Production 
-	// define("GOOGLE_API_KEY", "AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk");
-	
-	// Dev
-	define("GOOGLE_API_KEY", "AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs");
 	
 	function nearby() {
 		$query = $_GET["query"];
 		$latitude = $_GET["latitude"];
 		$longitude = $_GET["longitude"];
 
-		$url = "https://maps.googleapis.com/maps/api/place/textsearch/xml?";
-		$url .= "location=" . $latitude . "," . $longitude;
-		$url .= "&radius=5000&query=" . $query;
-		$url .= "&key=" . GOOGLE_API_KEY;
+		if( CONFIG_DEBUG ) {
+			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-nearby.xml";
+		} else {
+			$url = "https://maps.googleapis.com/maps/api/place/textsearch/xml?";
+			$url .= "location=" . $latitude . "," . $longitude;
+			$url .= "&radius=5000&query=" . $query;
+			$url .= "&key=" . CONFIG_GOOGLE_API_KEY;
+		}
 
 		$xml = file_get_contents($url);
 		
@@ -60,23 +57,33 @@
 	}
 
 	function getPlaceById($placeId) {
-		$url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=" . GOOGLE_API_KEY;
+		if( CONFIG_DEBUG ) {
+			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-place-by-id.json";	
+		} else {
+			$url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=" . CONFIG_GOOGLE_API_KEY;	
+		}
+		
 		$json = file_get_contents($url);
 		return $json;
 	}
 
 	function getPhotoByReference($reference, $maxwidth) {
-		$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth";
-		$url .= "&photoreference=$reference&key=" . GOOGLE_API_KEY;
+		if( CONFIG_DEBUG ) {
+			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-photo-by-reference.jpg";
+		} else {
+			$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth";
+			$url .= "&photoreference=$reference&key=" . CONFIG_GOOGLE_API_KEY;
 
-		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_HEADER, true);
-		curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Must be set to true so that PHP follows any "Location:" header
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_HEADER, true);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); // Must be set to true so that PHP follows any "Location:" header
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-		$a = curl_exec($ch); // $a will contain all headers
-		$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); // This is what you need, it will return you the last effective URL
+			$a = curl_exec($ch); // $a will contain all headers
+			$url = curl_getinfo($ch, CURLINFO_EFFECTIVE_URL); // This is what you need, it will return you the last effective URL			
+		}
+
 		return $url;
 	}
 

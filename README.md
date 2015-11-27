@@ -29,3 +29,15 @@ Google API Places Search - https://developers.google.com/places/web-service/sear
 http://ec2-52-91-21-223.compute-1.amazonaws.com/resources/data/google.php?action=nearby&query=restaurante&latitude=-33.407187799999996&longitude=-70.5680272
 
 Você pode mudar nessa URL a query, latitude e longitude. Ao carregar a pagina principal, no console aparece suas coordenadas
+
+https://maps.googleapis.com/maps/api/place/photo?photoreference=CmRdAAAA2G5BBviKpDy8cqrTi-5CBzIQOopIcD0Mdrnq3RAmOuBntZB5KyFo6u6Xz-0ArpmkbuYjBoDxFxWMuIiI132P6VMaCfQM1P-xqZYxNpzQFYhJAdluxvrN18WRBpZRB6LAEhC_ZuihYn0IuXp6GQUmvgPMGhQex4JT9c3vtgV_yr-8-5g-sOEZTA&sensor=false&maxheight=150&maxwidth=250&key=AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs
+
+
+https://maps.googleapis.com/maps/api/place/photo?maxwidth=300&photoreference=CnRtAAAATLZNl354RwP_9UKbQ_5Psy40texXePv4oAlgP4qNEkdIrkyse7rPXYGd9D_Uj1rVsQdWT4oRz4QrYAJNpFX7rzqqMlZw2h2E2y5IKMUZ7ouD_SlcHxYq1yL4KbKUv3qtWgTK0A6QbGh87GB3sscrHRIQiG2RrmU_jF4tENr9wGS_YxoUSSDrYjWmrNfeEHSGSc3FyhNLlBU&key=AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs
+
+
+https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJ0YrcJ2bPYpYRh2h6mrxzbQ4&key=AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs
+
+https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=
+
+https://maps.googleapis.com/maps/api/place/textsearch/xml?location=-33.407187799999996,-70.5680272&radius=5000&query=restaurantes&key=AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs

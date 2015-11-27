@@ -1,0 +1,165 @@
+
+{
+   "html_attributions" : [],
+   "result" : {
+      "address_components" : [
+         {
+            "long_name" : "Magnere",
+            "short_name" : "Magnere",
+            "types" : [ "route" ]
+         },
+         {
+            "long_name" : "Providencia",
+            "short_name" : "Providencia",
+            "types" : [ "sublocality_level_1", "sublocality", "political" ]
+         },
+         {
+            "long_name" : "Santiago",
+            "short_name" : "Santiago",
+            "types" : [ "locality", "political" ]
+         },
+         {
+            "long_name" : "Santiago Metropolitan",
+            "short_name" : "Santiago Metropolitan",
+            "types" : [ "administrative_area_level_1", "political" ]
+         },
+         {
+            "long_name" : "Chile",
+            "short_name" : "CL",
+            "types" : [ "country", "political" ]
+         }
+      ],
+      "adr_address" : "\u003cspan class=\"street-address\"\u003eMagnere\u003c/span\u003e, \u003cspan class=\"locality\"\u003eSantiago\u003c/span\u003e, \u003cspan class=\"region\"\u003eSantiago Metropolitan\u003c/span\u003e, \u003cspan class=\"country-name\"\u003eChile\u003c/span\u003e",
+      "formatted_address" : "Magnere, Santiago, Santiago Metropolitan, Chile",
+      "formatted_phone_number" : "(2) 2650 9125",
+      "geometry" : {
+         "location" : {
+            "lat" : -33.4252857,
+            "lng" : -70.61798779999999
+         }
+      },
+      "icon" : "https://maps.gstatic.com/mapfiles/place_api/icons/restaurant-71.png",
+      "id" : "84f91a9b02646935e50bccfec51236e2680e722e",
+      "international_phone_number" : "+56 2 2650 9125",
+      "name" : "Astrid y Gaston",
+      "photos" : [
+         {
+            "height" : 3264,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/105888256304534853662\"\u003eJoel de Oliveira\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAyWyKC5hWW7XZOkrGHnrw865PvgsR0EtK12RpVSY0P1b8PkAQPV1-Bg7amOQS81sECfnWGDHoibxxO2FZTTr_9-yaV5Hj6sZuKcA2yZfinFEPlJPrea8fweSPs9M1AL3gEhAsROYtTtTg87kCQBR3_AkQGhQc5aG1rOzkTvwmKrIVk9vlCqznXg",
+            "width" : 2448
+         },
+         {
+            "height" : 3264,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/105888256304534853662\"\u003eJoel de Oliveira\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAA5w-MYjk0dgJgG6mS3V81m-w-UJUD1tCp6_clK0sK3Z5tbpon31I8HtZjczIxDCgnWRARq3cJjQ62wsIaUOQmAMnGEMtjrIjEaNIxvkOfB8JDqSGzXtqaFj0a3aAvTGjEhCZx1ENJMyTPy-OLTIDzmSyGhTq-Pdj4KHGqwBGWkCYXQQobwxgGg",
+            "width" : 2448
+         },
+         {
+            "height" : 3264,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/105888256304534853662\"\u003eJoel de Oliveira\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAiztPSoGJo8XiMnukn57JOQxtqiJ7BgOsm-ZpwCtsfTi5CWQ0cm0t-KdUa2q93yD4SPGgYfhvoZh2x7iQkP_xmoytku-7bZoUpiQmmFQQsZQCs3niUsVhFAWg6_eRT8weEhD-yfblj6qIsDO-voMzUGd-GhQqMntpv4xh5wX5qAO73qN6N8_UCQ",
+            "width" : 2448
+         },
+         {
+            "height" : 3264,
+            "html_attributions" : [
+               "\u003ca href=\"https://maps.google.com/maps/contrib/105888256304534853662\"\u003eJoel de Oliveira\u003c/a\u003e"
+            ],
+            "photo_reference" : "CmRdAAAAq2s7sKOVR7sC5WQqX8SUrBVJbIpI63yL7xMkFvtyjCjnl_8SMjsQPLRqOR3Vn7Z2LijS-o-Ymxw3plz_V4__uminszOAC_ysWQx7iH1fEK8d5SxbNXBdY1VfHwHt5z__EhBllytTy9LaZBOLvWh_-322GhTgn5wsrcihPA0ct-5-5vHdA2NP-A",
+            "width" : 2448
+         }
+      ],
+      "place_id" : "ChIJ3dLmx2PPYpYRcc-U6EPtwTc",
+      "rating" : 4.5,
+      "reference" : "CnRiAAAAqNKD-Hpk85_CP8_YRf-ZRrHJAymfYcyYf0nc8jclsF2S08CDI6fJH5gzk2mPXeY03Zz39NbSns5TJy-w1ITy9sgI8K3wojwEseqv-97fltCe4h614b7uf2pA0hC9jdNFcq3LIceSm1mWI_ETS3rwZBIQdecliz9dV4Bnalyyahtu9hoUTk1iy-IEzCO_iBMoFuP3DEmEhOg",
+      "reviews" : [
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Guilherme Monteiro",
+            "author_url" : "https://plus.google.com/100011658482614244922",
+            "language" : "pt-BR",
+            "profile_photo_url" : "//lh3.googleusercontent.com/-w937k2XeUpo/AAAAAAAAAAI/AAAAAAAACrU/aeBfj8vB8QQ/photo.jpg",
+            "rating" : 5,
+            "text" : "muy bueno!!!!",
+            "time" : 1423857524
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 2,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Thiago Castro",
+            "author_url" : "https://plus.google.com/112189943473038599831",
+            "language" : "pt-BR",
+            "profile_photo_url" : "//lh5.googleusercontent.com/-p5ZmizPyrfc/AAAAAAAAAAI/AAAAAAAAAdo/oWds2rSgjN0/photo.jpg",
+            "rating" : 4,
+            "text" : "Esperava mais para o melhor do Chile! Ainda mais pelo preço! Por indicação do maître pedi o ossobuco, talvez devesse ter optado por peixes! Ambiente agradavel, atendimento ótimo e sobremesa excelente com sorvete de uma fruta nativa! ",
+            "time" : 1433109643
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Joel de Oliveira",
+            "author_url" : "https://plus.google.com/105888256304534853662",
+            "language" : "pt-BR",
+            "profile_photo_url" : "//lh6.googleusercontent.com/-AT1DS5JCW4E/AAAAAAAAAAI/AAAAAAAAAI8/GXJNmjMZi94/photo.jpg",
+            "rating" : 5,
+            "text" : "Maravilhosa cozinha .",
+            "time" : 1437263092
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 3,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Um usuário do Google",
+            "language" : "pt-BR",
+            "rating" : 5,
+            "text" : "Realmente impressionante.\nVale a pena conhecer\nAlta gastronomia",
+            "time" : 1432431062
+         },
+         {
+            "aspects" : [
+               {
+                  "rating" : 2,
+                  "type" : "overall"
+               }
+            ],
+            "author_name" : "Daniel Brown",
+            "author_url" : "https://plus.google.com/105916175802282742381",
+            "language" : "en",
+            "rating" : 4,
+            "text" : "Very classy, excellent service, excellent gourmet food. Quite a good selection of foods, very large selection of wines. A little overpriced all said and done, but worth going at least once.\n\nProbably one of the better Peruvian-Gourmet restaurants in Santiago.",
+            "time" : 1447684877
+         }
+      ],
+      "scope" : "GOOGLE",
+      "types" : [ "restaurant", "food", "point_of_interest", "establishment" ],
+      "url" : "https://maps.google.com/?cid=4017753218511851377",
+      "user_ratings_total" : 36,
+      "utc_offset" : -180,
+      "vicinity" : "Magnere, Santiago",
+      "website" : "http://www.astridygaston.cl/"
+   },
+   "status" : "OK"
+}
