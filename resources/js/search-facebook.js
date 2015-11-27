@@ -43,7 +43,7 @@ function getPageId(pageName){
 		  // Result
 		  if (response && !response.error) {
 		  return response.id;
-		  `}
+		  }
 	  }
 	);
 		
