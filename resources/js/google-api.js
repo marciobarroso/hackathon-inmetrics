@@ -52,6 +52,9 @@ function fillResultList() {
 	if( json.google.status === "OK" ) {
 		fillResult(json.google.result[0], ".one");
 	}
+	
+	// enable slick plugin
+	$("div.thumbnail").slick();
 }
 
 function fillResult(result, selector) {
@@ -64,20 +67,19 @@ function fillResult(result, selector) {
 	$(selector + " .website").html("");
 
 	// photo
-	var img = $("<img />");
-	$(img).prop("class","img-responsive");
-	$(img).prop("height","200px");
-	$(img).prop("alt",result.name);
+	
 	var parent = $(selector + " .thumbnail");
 	for( var i=0; i<result.photos.length; i++) {
+		var img = $("<img />");
+		$(img).prop("class","img-responsive");
+		$(img).prop("height","200px");
+		$(img).prop("alt",result.name);
 		$(img).prop("src", result.photos[i].url);
+		
 		var div = $("<div></div>");
 		$(div).append(img);
 		$(parent).append(div);
 	}
-
-	// enable slick plugin
-	$(selector + ".thumbnail").slick();
 
 	// informations
 	$(selector + " .title").append(result.name);
