@@ -50,11 +50,66 @@ function googleApiNearbySearch(query) {
 function fillResultList() {
 	var json = GOOGLE_API_RESULTS;
 	if( json.google.status === "OK" ) {
-		fillResult(json.google.result[0], ".one");
+		var selectors = ["one","two","three","four","five","six","seven","eight","nine","then"];
+		for( var i=0; i<json.google.result.length; i++ ) {
+			resetDivResult(selectors[i]);
+			createDivResult(selectors[i]);
+			fillResult(json.google.result[i], "." + selectors[i]);
+		}
 	}
-	
+
 	// enable slick plugin
-	$("div.thumbnail").slick();
+	$("div.thumbnail").each(function() {
+		$(this).slick({
+			dots: true,
+			infinite: true,
+			speed: 500,
+			fade: true,
+			cssEase: 'linear'
+		});
+	});
+}
+
+function resetDivResult(selector) {
+	$(".row ." + selector).remove();
+}
+
+function createDivResult(selector) {
+	var row = $("<div></div>");
+	$(row).prop("class","row " + selector);
+	$("div#results").append(row);
+
+	var container = $("<div></div>");
+	$(container).prop("class","col-md-12 col-sm-6");
+	$(row).append(container);
+
+	var thumbnail = $("<div></div>");
+	$(thumbnail).prop("class","col-md-3 thumbnail");
+	$(container).append(thumbnail);
+
+	var info = $("<div></div>");
+	$(info).prop("class","col-md-5 info");
+	$(container).append(info);
+
+	var title = $("<h3></h3>");
+	$(title).prop("class","title");
+	$(info).append(title);
+
+	var address = $("<p></p>");
+	$(address).prop("class","address");
+	$(info).append(address);
+
+	var phone = $("<p></p>");
+	$(phone).prop("class","phone");
+	$(info).append(phone);
+
+	var website = $("<p></p>");
+	$(website).prop("class","website");
+	$(info).append(website);
+
+	var rating = $("<div></div>");
+	$(rating).prop("class","col-md-4 rating");
+	$(container).append(rating);
 }
 
 function fillResult(result, selector) {
@@ -67,9 +122,8 @@ function fillResult(result, selector) {
 	$(selector + " .website").html("");
 
 	// photo
-	
 	var parent = $(selector + " .thumbnail");
-	for( var i=0; i<result.photos.length; i++) {
+	for( var i=0; i<result.photos.length; i++ ) {
 		var img = $("<img />");
 		$(img).prop("class","img-responsive");
 		$(img).prop("height","200px");
@@ -100,9 +154,6 @@ function getNearbySearchUrl(query) {
 
 function createMap(selector, latitude, longitude, label) {
 	var coordinates = {lat: latitude, lng: longitude}; 	
-
-	alert("lat -> " + latitude);
-	alert("lng -> " + longitude);
 
 	var map = new google.maps.Map($(selector), {
 		center: coordinates,
