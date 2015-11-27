@@ -44,10 +44,31 @@
 		for( $i=0; $i < sizeof($result["google"]["result"]); $i++ ) {
 			if( isset($result["google"]["result"][$i]["photo"]) ) {
 				$photo = array();
-				$photo["url"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300);
-				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
-				$photo["photo_reference"] = $result["google"]["result"][$i]["photo"]["photo_reference"];
-				$result["google"]["result"][$i]["photo"] = $photo;
+				$json = getPlaceById($result["google"]["result"][$i]["place_id"]);
+				$detail = json_decode($json, TRUE);
+
+				foreach( $detail["result"]["photos"] as $p ) {
+					$arr = array();
+					$arr["url"] = getPhotoByReference($p["photo_reference"], 300, 200);
+					$arr["photo_reference"] = $p["photo_reference"];
+					$photo[] = $arr;
+				}
+
+				// load other details
+				if( isset($detail["result"]["formatted_phone_number"]) ) {
+					$result["google"]["result"][$i]["phone_number"] = $detail["result"]["formatted_phone_number"];	
+				} else {
+					$result["google"]["result"][$i]["phone_number"] = "";
+				}
+
+				if( isset($detail["result"]["website"]) ) {
+					$result["google"]["result"][$i]["website"] = $detail["result"]["website"];	
+				} else {
+					$result["google"]["result"][$i]["website"] = "";
+				}
+				
+				$result["google"]["result"][$i]["photos"] = $photo;
+				unset($result["google"]["result"][$i]["photo"]);
 			}
 		}
 		
@@ -67,11 +88,11 @@
 		return $json;
 	}
 
-	function getPhotoByReference($reference, $maxwidth) {
+	function getPhotoByReference($reference, $maxwidth, $maxheight) {
 		if( CONFIG_DEBUG ) {
 			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-photo-by-reference.jpg";
 		} else {
-			$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth";
+			$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth&maxheight=$maxheight";
 			$url .= "&photoreference=$reference&key=" . CONFIG_GOOGLE_API_KEY;
 
 			$ch = curl_init();

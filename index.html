@@ -22,6 +22,9 @@
 		<meta name="theme-color" content="#ffffff">
 
 		<link rel="stylesheet" type="text/css" href="vendors/bootstrap/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="vendors/plugins/slick/css/slick.css">
+		<link rel="stylesheet" type="text/css" href="vendors/plugins/slick/css/slick-theme.css">
+
 		<link rel="stylesheet" type="text/css" href="resources/css/index.css">
 
 		<!--[if lt IE 9]>
@@ -40,7 +43,14 @@
 						<div class="col-md-4" id=""></div>
 						<form>
 							<div class="form-group col-md-4">
-								<input type="text" id="busca" placeholder="O que você procura?" class="form-control">
+								<div class="row">
+									<div class="col-md-1">
+										<img class="loading" style="display: none;" src="resources/images/ajax-loader.gif" border="0" />
+									</div>
+									<div class="col-md-11">
+										<input type="text" id="busca" placeholder="O que você procura?" class="form-control">
+									</div>
+								</div>
 							</div>
 							<div class="form-group">
 								<input id="btn-main" type="button" value="Buscar" class="btn btn-primary">
@@ -55,126 +65,30 @@
 
 				<div class="row">
 
-				<div class="col-md-1"></div>
+					<div class="col-md-1"></div>
 
-				<div class="col-md-10">
+					<div class="col-md-10">
 
-					<ul class="nav nav-tabs">
-						<li class="active"><a data-toggle="tab" href="#results">Resultados</a></li>
-						<li><a data-toggle="tab" href="#graphics">An&aacute;lise
-								Visual</a></li>
-					</ul>
-					<div class="tab-content">
-						<div id="results" class="tab-pane fade in active">
-							<h3>Resultados</h3>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab" href="#results">Resultados</a></li>
+							<li><a data-toggle="tab" href="#graphics">An&aacute;lise
+									Visual</a></li>
+						</ul>
+						<div class="tab-content">
+							<div id="results" class="tab-pane fade in active">
+								<h3>Resultados</h3>
+							</div>
+							<div id="graphics" class="tab-pane fade">
+								<h3>An&aacute;lise Visual</h3>
 
-							<!-- resultado -->
-							<div class="row">
-								<div class="col-md-12 col-sm-6">
-									<div class="col-md-3 thumbnail">
-										<img class="img-responsive" height="200px"
-											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
-											alt="Bar do zé">
-									</div>
-									<div class="col-md-5">
-										<h3 class="title">Bar do zé</h3>
-										<p class="address">R. da Mooca, 339 - Mooca, São Paulo - SP,
-											03104-000</p>
-										<p class="phone">(11) 3208-8383</p>
-										<p class="opened">Aberto hoje · 06:00 – 22:00</p>
-										<p class="description">Bar espaçoso animado por bandas de gêneros
-											musicais populares tem chope, destilados e comidinhas
-											brasileiras.</p>
-									</div>
-									<div class="col-md-4 text-right">
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
-											width="300" height="200" style="border: 0" allowfullscreen></iframe>
-									</div>
-								</div>
-								<div class="col-md-12 col-sm-6 thumbnail">
-									<div class="col-md-3">
-										<img class="img-responsive" width="300px"
-											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
-											alt="Bar do zé">
-									</div>
-									<div class="col-md-3">
-										<h3>Bar do zé</h3>
-										<p>Endereço: R. da Mooca, 339 - Mooca, São Paulo - SP,
-											03104-000</p>
-										<p>Telefone: (11) 3208-8383</p>
-										<p>Horas: Aberto hoje · 06:00 – 22:00</p>
-										<p>Descricao: Bar espaçoso animado por bandas de gêneros
-											musicais populares tem chope, destilados e comidinhas
-											brasileiras.</p>
-
-									</div>
-									<div class="col-md-3">
-										<h3>Bar do zé</h3>
-										<img  class="img-responsive"  width="300px" src="http://i.imgur.com/T1GXhfM.png"
-											alt="Bar do zé">
-										<p></p>
-										<p align="left">
-											<a href="#" class="btn btn-primary" role="button">Mais
-												informações</a>
-										</p>
-									</div>
-									<div class="col-md-3">
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
-											width="350" height="220" style="border: 0" allowfullscreen></iframe>
-									</div>
-								</div>
-								<div class="col-md-12 col-sm-6 thumbnail">
-									<div class="col-md-3">
-										<img class="img-responsive" width="300px"
-											src="http://alsolo.com.br/img/projetos/538264d54e87e.jpg"
-											alt="Bar do zé">
-									</div>
-									<div class="col-md-3">
-										<h3>Bar do zé</h3>
-										<p>Endereço: R. da Mooca, 339 - Mooca, São Paulo - SP,
-											03104-000</p>
-										<p>Telefone: (11) 3208-8383</p>
-										<p>Horas: Aberto hoje · 06:00 – 22:00</p>
-										<p>Descricao: Bar espaçoso animado por bandas de gêneros
-											musicais populares tem chope, destilados e comidinhas
-											brasileiras.</p>
-
-									</div>
-									<div class="col-md-3">
-										<h3>Bar do zé</h3>
-										<img  class="img-responsive"  width="300px" src="http://i.imgur.com/T1GXhfM.png"
-											alt="Bar do zé">
-										<p></p>
-										<p align="left">
-											<a href="#" class="btn btn-primary" role="button">Mais
-												informações</a>
-										</p>
-									</div>
-									<div class="col-md-3">
-										<iframe
-											src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d98427.09964349253!2d-46.65116220071145!3d-23.53901247431676!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce57bd312382af%3A0x75a9575d914ad545!2sBoteco+Seu+Z%C3%A9!5e0!3m2!1spt-BR!2sbr!4v1448508540001"
-											width="350" height="220" style="border: 0" allowfullscreen></iframe>
-									</div>
-								</div>
-
-
+								<br /> <br /> <br /> <br /> <br />
 
 							</div>
-
-							<!-- tabela de resultados -->
-
 						</div>
-						<div id="graphics" class="tab-pane fade">
-							<h3>An&aacute;lise Visual</h3>
 
-							<br /> <br /> <br /> <br /> <br />
-
-						</div>
 					</div>
 
-				</div>
+					<div class="col-md-1"></div>
 
 			</div>
 
@@ -183,9 +97,13 @@
 		<div id="map"></div>
 
 		<script type="text/javascript" src="vendors/jquery/jquery-1.11.3.min.js"></script>
+		<script type="text/javascript" src="vendors/jquery/jquery-migrate-1.2.1.min.js"></script>
+		<script type="text/javascript" src="vendors/plugins/slick/js/slick.min.js"></script>
+
 		<script type="text/javascript" src="vendors/bootstrap/js/bootstrap.min.js"></script>
+		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs"></script>
 		<script type="text/javascript" src="resources/js/main.js"></script>
 		<script type="text/javascript" src="resources/js/google-api.js"></script>
-		
+
 	</body>
 </html>

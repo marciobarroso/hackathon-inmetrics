@@ -42,8 +42,122 @@ function googleApiNearbySearch(query) {
 	  		GOOGLE_API_RESULTS = response;
 	  		console.log("success");
 			console.log(GOOGLE_API_RESULTS);
+
+			if( GOOGLE_API_RESULTS.google.result !== undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
+				fillResultList();
+				$("div#result").fadeIn();
+			} else {
+				alert("Cota free da Google API esgotada");
+			}
+
+			loading();
 	  	}
 	});
+}
+
+function fillResultList() {
+	console.log("fill result list");
+	var json = GOOGLE_API_RESULTS;
+	if( json.google.status === "OK" ) {
+		var selectors = ["one","two","three","four","five","six","seven","eight","nine","then"];
+		for( var i=0; i<json.google.result.length; i++ ) {
+			resetDivResult(selectors[i]);
+			createDivResult(selectors[i]);
+			fillResult(json.google.result[i], "." + selectors[i]);
+		}
+	}
+
+	// enable slick plugin
+//	$("div.thumbnail").each(function() {
+//		$(this).slick({
+//			dots: false,
+//			infinite: true,
+//			speed: 500,
+//			fade: true,
+//			cssEase: 'linear'
+//		});
+//	});
+}
+
+function resetDivResult(selector) {
+	$(".row ." + selector).remove();
+}
+
+function createDivResult(selector) {
+	var row = $("<div></div>");
+	$(row).prop("class","row " + selector);
+	$("div#results").append(row);
+
+	var container = $("<div></div>");
+	$(container).prop("class","col-md-12 col-sm-6");
+	$(row).append(container);
+
+	var thumbnail = $("<div></div>");
+	$(thumbnail).prop("class","col-md-3 thumbnail");
+	$(container).append(thumbnail);
+
+	var info = $("<div></div>");
+	$(info).prop("class","col-md-5 info");
+	$(container).append(info);
+
+	var title = $("<h3></h3>");
+	$(title).prop("class","title");
+	$(info).append(title);
+
+	var address = $("<p></p>");
+	$(address).prop("class","address");
+	$(info).append(address);
+
+	var phone = $("<p></p>");
+	$(phone).prop("class","phone");
+	$(info).append(phone);
+
+	var website = $("<p></p>");
+	$(website).prop("class","website");
+	$(info).append(website);
+
+	var rating = $("<div></div>");
+	$(rating).prop("class","col-md-4 rating");
+	$(container).append(rating);
+}
+
+function fillResult(result, selector) {
+	if( result.photos === undefined ) return;
+
+	var noImage = $("<img />")
+		.attr("src","resources/images/no-image.jpg")
+		.attr("class","img-responsive")
+		.attr("height","200px")
+		.attr("width","300px");
+
+	// reset
+	$(selector + " .thumbnail").html("");
+	$(selector + " img.photo").prop("alt", "");
+	$(selector + " .title").html("");
+	$(selector + " .address").html("");
+	$(selector + " .phone").html("");
+	$(selector + " .website").html("");
+
+	var parent = $(selector + " .thumbnail");
+	if( result.photos.length > 1 ) {
+		var img = $("<img />");
+		$(img).prop("class","img-responsive");
+		$(img).prop("height","200px");
+		$(img).prop("alt",result.name);
+		$(img).prop("src", result.photos[0].url);
+		$(parent).append(img);	
+	} else {
+		$(parent).append(noImage);
+	}
+
+	// informations
+	$(selector + " .title").append(result.name);
+	$(selector + " .address").append(result.formatted_address);
+	$(selector + " .phone").append(result.phone_number);
+	$(selector + " .website").append(result.website);
+
+	// map
+	// createMap(selector + " .map", result.geometry.location.lat, result.geometry.location.lng, result.name);
 }
 
 function getNearbySearchUrl(query) {
@@ -51,4 +165,19 @@ function getNearbySearchUrl(query) {
 	url += "&latitude=" + GOOGLE_API_GEOLOCATION.latitude;
 	url += "&longitude=" + GOOGLE_API_GEOLOCATION.longitude;
 	return url;
+}
+
+function createMap(selector, latitude, longitude, label) {
+	var coordinates = {lat: latitude, lng: longitude}; 	
+
+	var map = new google.maps.Map($(selector), {
+		center: coordinates,
+		zoom: 8
+	});
+
+	var marker = new google.maps.Marker({
+		position: coordinates,
+		label: label,
+		map: map 
+	});
 }
