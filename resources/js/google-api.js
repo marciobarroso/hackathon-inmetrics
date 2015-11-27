@@ -113,6 +113,8 @@ function createDivResult(selector) {
 }
 
 function fillResult(result, selector) {
+	if( result.photos === undefined ) return;
+
 	// reset
 	$(selector + " .thumbnail").html("");
 	$(selector + " img.photo").prop("alt", "");
