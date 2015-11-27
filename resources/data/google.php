@@ -72,9 +72,9 @@
 			}
 		}
 		
-		//print_r($result);
+		print_r($result);
 		$json = json_encode($result);
-		print($json);		
+		//print($json);		
 	}
 
 	function getPlaceById($placeId) {
