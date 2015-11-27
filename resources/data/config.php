@@ -11,14 +11,14 @@
 
 	// CHANGE HERE
 	define("CONFIG_ENVIRONMENT", PRODUCTION);
-	define("CONFIG_DEBUG", CONFIG_ENVIRONMENT === PRODUCTION ? FALSE : TRUE);
-	//define("CONFIG_DEBUG", FALSE);
+	//define("CONFIG_DEBUG", CONFIG_ENVIRONMENT === PRODUCTION ? FALSE : TRUE);
+	define("CONFIG_DEBUG", FALSE);
 
 	// constants for APIS
 	define("CONFIG_GOOGLE_API_KEY", CONFIG_ENVIRONMENT === PRODUCTION ? CONFIG_GOOGLE_API_KEY_PRD : CONFIG_GOOGLE_API_KEY_DEV);
 	
 	// enable error messages
-	if( CONFIG_ENVIRONMENT === DEVELOPMENT && CONFIG_DEBUG === TRUE ) {
+	if( CONFIG_DEBUG === TRUE ) {
 		error_reporting(E_ALL);
 		ini_set('display_errors', 1);
 
