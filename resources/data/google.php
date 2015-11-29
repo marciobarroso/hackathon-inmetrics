@@ -73,7 +73,7 @@
 			$arr = json_decode($json, TRUE);
 			$arr["GOOGLE_API_KEY"] = CONFIG_GOOGLE_API_KEY;
 
-			if( $arr["status"] === "ZERO_RESULTS" ) {
+			/*if( $arr["status"] === "ZERO_RESULTS" ) {
 				getLogger()->debug(" -> zero results");
 				$result = array();
 				$result["google"] = array();
@@ -82,7 +82,7 @@
 				$json = json_encode($result);
 				print($json);
 				return;
-			}
+			}*/
 		}
 			
 		$result = array();
