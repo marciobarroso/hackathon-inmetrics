@@ -50,7 +50,7 @@
 				// optionals parameters
 				$url .= "&radius=" . $START_RADIUS;
 				$url .= "&keyword=" . $query;
-				$url .= "&rankby=distance";
+				$url .= "&rankby=prominence";
 				
 			}
 
