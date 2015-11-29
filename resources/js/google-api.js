@@ -338,7 +338,7 @@ function fillModal(type,data) {
 
 		var tab_who_we_are_col_p = $("<p class='description'></p>");
 		$(tab_who_we_are_col).append(tab_who_we_are_col_p);
-		$(tab_who_we_are_col_p).html("Description bla bla lba");
+		$(tab_who_we_are_col_p).html(data.ranktoon.description);
 
 		var tab_institutional = $("<div id='institutional' class='tab-pane fade row'></div>");
 		$(tab_content).append(tab_institutional);
@@ -352,7 +352,7 @@ function fillModal(type,data) {
 
 		var tab_institutional_col_p = $("<p class='institutional'></p>");
 		$(tab_institutional_col).append(tab_institutional_col_p);
-		$(tab_institutional_col_p).html("Institutional bla bla lba");
+		$(tab_institutional_col_p).html(data.ranktoon.institutional);
 
 		var tab_facebook = $("<div id='facebook' class='tab-pane fade row'></div>");
 		$(tab_content).append(tab_facebook);
@@ -366,11 +366,11 @@ function fillModal(type,data) {
 
 		var tab_facebook_col_p_likes = $("<p class='likes'></p>");
 		$(tab_facebook_col).append(tab_facebook_col_p_likes);
-		$(tab_facebook_col_p_likes).html("Likes: <b> 43241 </b>");
+		$(tab_facebook_col_p_likes).html("Likes: <b> 0 </b>");
 
 		var tab_facebook_col_p_checkins = $("<p class='checkins'></p>");
 		$(tab_facebook_col).append(tab_facebook_col_p_checkins);
-		$(tab_facebook_col_p_checkins).html("Checkins: <b> 412513410 </b>");
+		$(tab_facebook_col_p_checkins).html("Checkins: <b> 0 </b>");
 
 		var tab_twitter = $("<div id='twitter' class='tab-pane fade row'></div>");
 		$(tab_content).append(tab_twitter);
@@ -379,37 +379,47 @@ function fillModal(type,data) {
 		$(tab_twitter).append(tab_twitter_row);
 		$(tab_twitter_row).html("<h3>Nossas men&ccedil;&otilde;es no <b>Twitter</b></h3>");
 
-		for( var i=0; i<data.ranktoon.twitter.twetts.length; i++ ) {
+		if( data.ranktoon.twitter.twetts.length == 0 ) {
 
-			var tab_twitter_col_left = $("<div class='col-md-1'></div>");
-			$(tab_twitter_row).append(tab_twitter_col_left);
+			var xxxxxx = $("<div class='col-md-12'></div>");
+			$(tab_twitter_row).append(xxxxxx);
+			$(xxxxxx).html("<h4>Sem men&ccedil;&otilde;es</h4>");
 
-			var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
-				.prop("src", "resources/images/twitter_profile.png");
-			$(tab_twitter_col_left).append(tab_twitter_col_left_image);
+		} else {
 
-			var tab_twitter_col_right = $("<div class='col-md-11'></div>");
-			$(tab_twitter_row).append(tab_twitter_col_right);
 
-			var tab_twitter_col_right_link = $("<a></a>")
-				.prop("href","http://twitter.com/" + "usuario"); // set the username
-			$(tab_twitter_col_right).append(tab_twitter_col_right_link);
+			for( var i=0; i<data.ranktoon.twitter.twetts.length; i++ ) {
 
-			var tab_twitter_col_right_span_name = $("<span class='name'></span>")
-				.html("Name");
-			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
+				var tab_twitter_col_left = $("<div class='col-md-1'></div>");
+				$(tab_twitter_row).append(tab_twitter_col_left);
 
-			var tab_twitter_col_right_span_user = $("<span class='user'></span>")
-				.html(" - @usuario");
-			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
-			
-			var tab_twitter_col_right_message = $("<p class='message'></p>")
-				.html("bla bla bla bla");
-			$(tab_twitter_row).append(tab_twitter_col_right_message);
+				var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
+					.prop("src", "resources/images/twitter_profile.png");
+				$(tab_twitter_col_left).append(tab_twitter_col_left_image);
 
-			$(tab_twitter_row).append($("<hr />"));
+				var tab_twitter_col_right = $("<div class='col-md-11'></div>");
+				$(tab_twitter_row).append(tab_twitter_col_right);
+
+				var tab_twitter_col_right_link = $("<a></a>")
+					.prop("href","http://twitter.com/" + "usuario"); // set the username
+				$(tab_twitter_col_right).append(tab_twitter_col_right_link);
+
+				var tab_twitter_col_right_span_name = $("<span class='name'></span>")
+					.html("Name");
+				$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
+
+				var tab_twitter_col_right_span_user = $("<span class='user'></span>")
+					.html(" - @usuario");
+				$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
+				
+				var tab_twitter_col_right_message = $("<p class='message'></p>")
+					.html("bla bla bla bla");
+				$(tab_twitter_row).append(tab_twitter_col_right_message);
+
+				$(tab_twitter_row).append($("<hr />"));
+			}
+
 		}
-
 
 		var tab_contact = $("<div id='contact' class='tab-pane fade row'></div>");
 		$(tab_content).append(tab_contact);
