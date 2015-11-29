@@ -40,14 +40,14 @@
 		<div id="overlay">
 			<form>
 				<div class="row">
-					<div class="col-md-3"></div>
-					<div class="col-md-5">
+					<div class="col-md-3 col-sm-1 col-lg-4 col-xs-1"></div>
+					<div class="col-md-5 col-sm-9 col-lg-3 col-xs-9">
 						<input type="text" id="input-search" placeholder="O que você procura?" class="form-control">
 					</div>
-					<div class="col-md-1 form-group">
+					<div class="col-md-1 col-sm-1 col-lg-1 col-xs-1 form-group">
 						<input id="button-search" type="button" value="Buscar" class="btn btn-primary">
 					</div>
-					<div class="col-md-3"></div>
+					<div class="col-md-3 col-sm-1 col-lg-4 col-xs-1"></div>
 				</div>
 			</form>
 		</div>
