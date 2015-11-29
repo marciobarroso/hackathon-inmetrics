@@ -29,7 +29,12 @@
 	$GOOGLE_API_KEYS = array(
 		"AIzaSyA8zjLueGVxqsnPCVvv_2lU6bG1yf1QOcI",
 		"AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs",
-		"AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk"
+		"AIzaSyAozbpxXqq81tPUOjCEIVpkoPtGYxwUQXk",
+/*		"AIzaSyAxtuBTpqxX8j3A_8lGPWD0KEZ9LVjejf8",
+		"AIzaSyCaYaFBHAt-8Nfyb9gezkJ6zLRq7ZpdEW0",
+		"AIzaSyD2olWDCVb1D4k2pQNXCsVOhZEuMUTqbQY",
+		"AIzaSyA9Y2tttTtO-m4PmINYdWCUix3GFBmHHfg",
+		"AIzaSyCSfiA-WseFYNb8ayxEvzq2bZA8NsXBHXk" */
 	);
 
 	$choosed = $GOOGLE_API_KEYS[array_rand($GOOGLE_API_KEYS)];

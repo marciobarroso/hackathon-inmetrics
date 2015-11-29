@@ -80,10 +80,12 @@
 		<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&signed_in=true&key=<?php echo CONFIG_GOOGLE_API_KEY; ?>"></script>
 		<script src="https://apis.google.com/js/client:plusone.js?key=<?php echo CONFIG_GOOGLE_API_KEY; ?>"></script>
 		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
 
 		<script type="text/javascript" src="resources/js/main.js"></script>
 		<script type="text/javascript" src="resources/js/google-api.js"></script>
 		<script type="text/javascript" src="resources/js/facebook-api.js"></script>
+		<script type="text/javascript" src="resources/js/twitter-api.js"></script>
 
 	</body>
 </html>

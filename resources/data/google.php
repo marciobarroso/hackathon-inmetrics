@@ -349,37 +349,45 @@
 
 	function twitter() {
 		$query = getParameter($_GET, "query");
-		$query .= "+twitter";
 		
-		getLogger()->debug(" -> search facebook for $query");
+		if( strpos($query, "-") > -1 ) {
+			$query = substr($query, 0, strpos($query, "-") -1);
+		}
 
+		$query = strtolower($query);
+		$query .= "+twitter";
 		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
-		$json = file_get_contents($url);
-		$arr = json_decode($json, TRUE);
+		
+		$json = null;
+		$arr = null;
+		$check = 1;
+		while( $arr === null || ( isset($arr["responseStatus"]) && $arr["responseStatus"] === 403 ) && $check < 5) {
 
-		if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
-			$result = str_replace("https://twitter.com/","",$arr["responseData"]["results"][0]["unescapedUrl"]);
-			if( strpos($result, "?") > -1 ) {
-				$result = substr($result, 0, strpos($result, "?"));
+			getLogger()->debug(" -> twitter call for " . $check++ . " time(s)");
+
+			$json = file_get_contents($url);
+			$arr = json_decode($json, TRUE);
+			print_r($arr);
+
+			if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
+
+				$result = str_replace("https://twitter.com/","",$arr["responseData"]["results"][0]["unescapedUrl"]);
+				if( strpos($result, "?") > -1 ) {
+					$result = substr($result, 0, strpos($result, "?"));
+				}
+
+				$success = array();
+				$success["twitter"] = array("status" => "OK", "result" => $result);
+				getLogger()->debug(" -> twitter success " . $result);
+				print(json_encode($success));
+				
+			} else {
+				$error = array();
+				$error["twitter"] = array("status" => "ERROR", "message" => "result not found");
+				getLogger()->debug(" -> twitter error for " . $query);
+				print(json_encode($error));
 			}
 
-			if( strpos($result, "/") > -1 ) {
-				$result = str_replace("/","",$result);
-			}
-
-			if( strpos($result, "\\") > -1 ) {
-				$result = str_replace("\\","",$result);
-			}
-
-			$success = array();
-			$success["twitter"] = array("status" => "OK", "result" => $result);
-			getLogger()->debug(" -> facebook success " . $result);
-			print(json_encode($success));
-		} else {
-			$error = array();
-			$error["twitter"] = array("status" => "ERROR", "message" => "result not found");
-			getLogger()->debug(" -> facebook error");
-			print(json_encode($error));
 		}
 	}
 

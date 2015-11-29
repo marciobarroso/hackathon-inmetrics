@@ -112,7 +112,7 @@ function googleApiSetUserGeoLocation() {
 			console.log("Longitude : " + Number(GOOGLE_API_GEOLOCATION.lng));
 
 			GOOGLE_API_MAP.setCenter(GOOGLE_API_GEOLOCATION);
-			GOOGLE_API_MAP.setZoom(20);
+			GOOGLE_API_MAP.setZoom(15);
 
 			addUserGeolocationOnMap();
       	});
@@ -129,7 +129,7 @@ function googleApiSetUserGeoLocation() {
 			console.log("Longitude : " + Number(GOOGLE_API_GEOLOCATION.lng));
 
 			GOOGLE_API_MAP.setCenter(GOOGLE_API_GEOLOCATION);
-			GOOGLE_API_MAP.setZoom(20);
+			GOOGLE_API_MAP.setZoom(15);
 
 			addUserGeolocationOnMap();
 		});
@@ -143,10 +143,11 @@ function googleApiLoadMap() {
 	// load map
 	GOOGLE_API_MAP = new google.maps.Map(document.getElementById('map'), {
     	center: {lat: -34.397, lng: 150.644},
-    	zoom: 5
+    	zoom: 15
   	});
 
   	GOOGLE_API_MAP_BOUNDS = new google.maps.LatLngBounds();
+  	GOOGLE_API_MAP.setZoom(15);
 }
 
 function googleApiNearbySearch(query) {
@@ -165,7 +166,6 @@ function googleApiNearbySearch(query) {
 			console.log(GOOGLE_API_RESULTS);
 
 			if( GOOGLE_API_RESULTS.google.result !== undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
-				googleApiCallFacebookAndTwitterApis();
 				setResultsOnMap();
 			} else {
 				alert("Cota free da Google API esgotada");
@@ -176,16 +176,19 @@ function googleApiNearbySearch(query) {
 
 function googleApiCallFacebookAndTwitterApis() {
 	
-	googleApiSearchFacebookUser(0);
-	googleApiSearchFacebookUser(1);
-	googleApiSearchFacebookUser(2);
-	googleApiSearchFacebookUser(3);
-	googleApiSearchFacebookUser(4);	
-	
+	for( var i=0; i<GOOGLE_API_RESULTS.google.result.length; i++ ) {
+		var result = GOOGLE_API_RESULTS.google.result[i];
+		googleApiSearchFacebookUser(result);	
+	}
+
+	for( var i=0; i<GOOGLE_API_RESULTS.google.result.length; i++ ) {
+		var result = GOOGLE_API_RESULTS.google.result[i];
+		twitterApiGetTweetsByUser(result.name, result);
+	}
+
 }
 
-function googleApiSearchFacebookUser(id) {
-	var result = GOOGLE_API_RESULTS.google.result[id];
+function googleApiSearchFacebookUser(result) {
 	
 	$.ajax({
 		type: "GET",
@@ -199,7 +202,7 @@ function googleApiSearchFacebookUser(id) {
 	  			console.log("Search Facebook User for " + facebook);
 	  			result.facebook_user = facebook;
 	  			facebookApiLoadInformationByUser(facebook, result);
-				console.log("Facebook data successful loaded for " + result.name);
+	  			console.log("Facebook data successful loaded for " + result.name);
 			} else {
 				alert(response.facebook.status);
 			}
@@ -222,6 +225,8 @@ function setResultsOnMap() {
 			);
 		}
 	}
+
+	googleApiCallFacebookAndTwitterApis();
 }
 
 function getNearbySearchUrl(query) {
@@ -570,39 +575,43 @@ function fillModal(type,data) {
 		$(tab_twitter).append(tab_twitter_row);
 		$(tab_twitter_row).html("<h3>Nossas men&ccedil;&otilde;es no <b>Twitter</b></h3>");
 
-		/*
+		if( result.twitter !== undefined && result.twitter.feeds !== undefined ) {
 
-		for( var i=0; i<data.ranktoon.twitter.twetts.length; i++ ) {
 
-			var tab_twitter_col_left = $("<div class='col-md-1'></div>");
-			$(tab_twitter_row).append(tab_twitter_col_left);
+			for( var i=0; i<result.twitter.feeds.length; i++ ) {
+				var feed = result.twitter.feeds[i];
 
-			var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
-				.prop("src", "resources/images/twitter_profile.png");
-			$(tab_twitter_col_left).append(tab_twitter_col_left_image);
+				var tab_twitter_col_left = $("<div class='col-md-1'></div>");
+				$(tab_twitter_row).append(tab_twitter_col_left);
 
-			var tab_twitter_col_right = $("<div class='col-md-11'></div>");
-			$(tab_twitter_row).append(tab_twitter_col_right);
+				var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
+					.prop("src", feed.user.profile_image_url_https);
+				$(tab_twitter_col_left).append(tab_twitter_col_left_image);
 
-			var tab_twitter_col_right_link = $("<a></a>")
-				.prop("href","http://twitter.com/" + "usuario"); // set the username
-			$(tab_twitter_col_right).append(tab_twitter_col_right_link);
+				var tab_twitter_col_right = $("<div class='col-md-11'></div>");
+				$(tab_twitter_row).append(tab_twitter_col_right);
 
-			var tab_twitter_col_right_span_name = $("<span class='name'></span>")
-				.html("Name");
-			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
+				var tab_twitter_col_right_link = $("<a></a>")
+					.prop("href","http://twitter.com/" + feed.user.name); // set the username
+				$(tab_twitter_col_right).append(tab_twitter_col_right_link);
 
-			var tab_twitter_col_right_span_user = $("<span class='user'></span>")
-				.html(" - @usuario");
-			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
-			
-			var tab_twitter_col_right_message = $("<p class='message'></p>")
-				.html("bla bla bla bla");
-			$(tab_twitter_row).append(tab_twitter_col_right_message);
+				var tab_twitter_col_right_span_name = $("<span class='name'></span>")
+					.html(feed.user.screen_name);
+				$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
 
-			$(tab_twitter_row).append($("<hr />"));
+				var tab_twitter_col_right_span_user = $("<span class='user'></span>")
+					.html(" - @" + feed.user.name);
+				$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
+				
+				var tab_twitter_col_right_message = $("<p class='message'></p>")
+					.html(feed.text);
+				$(tab_twitter_row).append(tab_twitter_col_right_message);
+
+				$(tab_twitter_row).append($("<hr />"));
+			}
+
+
 		}
-		*/
 
 		var tab_graphics = $("<div id='graphics' class='tab-pane fade row'></div>");
 		$(tab_content).append(tab_graphics);

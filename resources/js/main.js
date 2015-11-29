@@ -33,6 +33,7 @@ $(document).ready(function(){
 window.onload = function() {
 	mainEnableControls();
 	googleApiOnWindowLoad();
+	GOOGLE_API_MAP.setZoom(15);
 	facebookApiOnWindowLoad();
 }
 
