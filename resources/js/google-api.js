@@ -629,6 +629,10 @@ function fillModal(type,data) {
 		var tab_graphics_col = $("<div class='col-md-12'></div>");
 		$(tab_graphics).append(tab_graphics_col);
 
+		var graphic = $("<img class='img-responsive' width='90%' border='0' />")
+			.prop("src", "resources/images/pizza.png");
+		$(tab_graphics_col).append(graphic);
+
 		$(".nav-tabs a[href='#facebook']").tab("show");
 
 	}

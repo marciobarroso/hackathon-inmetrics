@@ -134,6 +134,8 @@
 				
 					if( isset($result["google"]["result"][$i]["photo"]) ) {
 						$result["google"]["result"][$i]["photo"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300, 200);
+					} else if( isset($result["google"]["result"][$i]["photos"]) ) {
+						$result["google"]["result"][$i]["photo"] = getPhotoByReference($result["google"]["result"][$i]["photos"][0]["photo_reference"], 300, 200);
 					}
 				}
 			} else {
