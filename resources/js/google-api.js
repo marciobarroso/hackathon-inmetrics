@@ -139,8 +139,8 @@ function googleApiSetUserGeoLocation() {
 			GOOGLE_API_MAP.setZoom(20);
 
 			addUserGeolocationOnMap();
-//		});
-	}
+		});
+//	}
 }
 
 /**
