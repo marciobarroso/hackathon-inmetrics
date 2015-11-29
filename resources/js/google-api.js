@@ -167,7 +167,7 @@ function googleApiNearbySearch(query) {
 
 			if( GOOGLE_API_RESULTS.google.result !== undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
 				setResultsOnMap();
-			} else {
+			} else if( GOOGLE_API_RESULTS.google.status == "ERROR" ) {
 				alert("Nenhum resultado encontrado para a busca");
 			}
 	  	}
