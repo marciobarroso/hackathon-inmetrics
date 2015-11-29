@@ -168,7 +168,7 @@ function googleApiNearbySearch(query) {
 			if( GOOGLE_API_RESULTS.google.result !== undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
 				setResultsOnMap();
 			} else {
-				alert("Cota free da Google API esgotada");
+				alert("Nenhum resultado encontrado para a busca");
 			}
 	  	}
 	});
