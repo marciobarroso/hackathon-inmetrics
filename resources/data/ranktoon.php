@@ -18,4 +18,5 @@
 		$info = array();
 		$info["ranktoon"] = array();
 		$info["ranktoon"]["status"] = "OK";
+		$info["ranktoon"]["name"] = "Ranktoon";
 	}

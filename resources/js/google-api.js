@@ -106,7 +106,7 @@ function mapReset() {
 
 // load current position of the user
 function googleApiSetUserGeoLocation() {
-	if ( navigator.geolocation ) {
+/*	if ( navigator.geolocation ) {
 
 		navigator.geolocation.getCurrentPosition(function(position) {
       		GOOGLE_API_GEOLOCATION = {
@@ -124,7 +124,7 @@ function googleApiSetUserGeoLocation() {
 			addUserGeolocationOnMap();
       	});
     } else {
-    	$.getJSON("http://ipinfo.io", function(ipinfo){
+*/    	$.getJSON("http://ipinfo.io", function(ipinfo){
 			var latLong = ipinfo.loc.split(",");
 			GOOGLE_API_GEOLOCATION = {
 				lat: Number(latLong[0]), 
@@ -139,7 +139,7 @@ function googleApiSetUserGeoLocation() {
 			GOOGLE_API_MAP.setZoom(20);
 
 			addUserGeolocationOnMap();
-		});
+//		});
 	}
 }
 
@@ -217,10 +217,12 @@ function infoWindowClick(id) {
 function infoWindowLoad(id) {
 	console.log("loading informations for marker " + id);
 
-	
-	
+
+
 }
 
 function infoWindowRanktoon() {
 	$("div#modal").modal();
+
+
 }
