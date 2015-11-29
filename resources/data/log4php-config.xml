@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration xmlns="http://logging.apache.org/log4php/">
     <appender name="appender" class="LoggerAppenderFile">
-        <param name="file" value="/home/marcio/logs/ranktoon.log" />
+        <param name="file" value="/tmp/ranktoon.log" />
     </appender>
     <root>
         <level value="ALL" />

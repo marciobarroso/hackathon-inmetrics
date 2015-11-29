@@ -20,3 +20,8 @@ div#overlay {
 div#modal {
 	z-index: 10000;
 }
+
+div#modal .modal-header .title {
+	font-weight: bold;
+	font-size: 1.6em;
+}

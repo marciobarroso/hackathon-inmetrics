@@ -58,9 +58,8 @@
 		  	<div class="modal-dialog modal-lg">
 
 				<div class="row modal-content result">
-					<div class="modal-header">
-				    	<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title title">Villa Country Club</h4>
+					<div class="modal-header text-center">
+						<b class="title">Villa Country Club</b>
 					</div>
 					<div class="modal-body container-fluid">
 						<div class="row">
@@ -75,7 +74,7 @@
 						</div>
 						<div class="row">
 							<div class="col-md-12 text-left">
-								<h3>O que estão falando a sobre <b>Villa Country Club</b> nas redes sociais</h3>
+								<h3>O que estão falando a sobre <b class="title">Villa Country Club</b> nas redes sociais</h3>
 							</div>
 						</div>
 						<div class="row">
@@ -84,35 +83,46 @@
 								<ul class="nav nav-tabs">
 									<li class="active"><a data-toggle="tab" href="#face">Facebook</a></li>
 									<li><a data-toggle="tab" href="#twitter">Twitter</a></li>
+									<li><a data-toggle="tab" href="#graphics">An&aacute;lise Gr&aacute;fica</a></li>
 								</ul>
 								<div class="tab-content">
-									<div id="face" class="tab-pane fade in active">
-										<p>Numero de likes: 5.000</p>
-										<p>Numero de checkins: 2.000</p>
-										<p>Website: www.sdassdas.com.br</p>
+									<div id="face" class="tab-pane fade in active row">
+										<div class="col-md-12">
+											<br />
+											<p>Numero de likes: 5.000</p>
+											<p>Numero de checkins: 2.000</p>
+											<p>Website: www.sdassdas.com.br</p>
+
+										</div>
 									</div>
 
-									<div id="twitter" class="tab-pane fade">
-										<div class="row">
-											<div>
-												<h2>Ultimos twittes sobre o local escolhido: </h2>
-												<p>Usuario X</p>
-												<p>msg : Muito bom</p>
-												<p>Usuario X</p>
-												<p>msg : Muito bom</p>
-												<p>Usuario X</p>
-												<p>msg : Muito bom</p>
-											</div>
+									<div id="twitter" class="tab-pane fade row">
+										<div class="col-md-12">
+											<br />
+											<p>Usuario X</p>
+											<p>msg : Muito bom</p>
+											<p>Usuario X</p>
+											<p>msg : Muito bom</p>
+											<p>Usuario X</p>
+											<p>msg : Muito bom</p>
+										</div>
+									</div>
+
+									<div id="graphics" class="tab-pane fade row">
+										<div class="col-md-12">
+											<br />
+											
+
 										</div>
 									</div>
 								</div>
 
 							</div>
-							
+
 						</div>
 					</div>
 					<div class="modal-footer">
-						footer
+						<button type="button" class="btn btn-primary" data-dismiss="modal" aria-hidden="true">close</button>
 					</div>
 				</div>
 

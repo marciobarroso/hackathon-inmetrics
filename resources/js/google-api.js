@@ -216,6 +216,9 @@ function infoWindowClick(id) {
 
 function infoWindowLoad(id) {
 	console.log("loading informations for marker " + id);
+
+	
+	
 }
 
 function infoWindowRanktoon() {
