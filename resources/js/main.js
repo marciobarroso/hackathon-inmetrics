@@ -31,13 +31,9 @@ $(document).ready(function(){
 
 // customize the default events
 window.onload = function() {
-	googleApiOnWindowLoad();
-}
-
-// customize the default events
-window.onload = function() {
-	googleApiOnWindowLoad();
 	mainEnableControls();
+	googleApiOnWindowLoad();
+	facebookApiOnWindowLoad();
 }
 
 // enable controls

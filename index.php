@@ -83,6 +83,7 @@
 
 		<script type="text/javascript" src="resources/js/main.js"></script>
 		<script type="text/javascript" src="resources/js/google-api.js"></script>
+		<script type="text/javascript" src="resources/js/facebook-api.js"></script>
 
 	</body>
 </html>

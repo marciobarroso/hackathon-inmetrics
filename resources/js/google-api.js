@@ -165,9 +165,43 @@ function googleApiNearbySearch(query) {
 			console.log(GOOGLE_API_RESULTS);
 
 			if( GOOGLE_API_RESULTS.google.result !== undefined && GOOGLE_API_RESULTS.google.result.length > 0 ) {
+				googleApiCallFacebookAndTwitterApis();
 				setResultsOnMap();
 			} else {
 				alert("Cota free da Google API esgotada");
+			}
+	  	}
+	});
+}
+
+function googleApiCallFacebookAndTwitterApis() {
+	
+	googleApiSearchFacebookUser(0);
+	googleApiSearchFacebookUser(1);
+	googleApiSearchFacebookUser(2);
+	googleApiSearchFacebookUser(3);
+	googleApiSearchFacebookUser(4);	
+	
+}
+
+function googleApiSearchFacebookUser(id) {
+	var result = GOOGLE_API_RESULTS.google.result[id];
+	
+	$.ajax({
+		type: "GET",
+	  	dataType: "json",
+	  	url: "resources/data/google.php?action=facebook&query=" + result.name,
+	  	cache: false,
+	  	success: function(response){
+	  		console.log("Facebook search call response : " + response.facebook.status);
+	  		if( response.facebook.status == "OK" ) {
+	  			var facebook = response.facebook.result;
+	  			console.log("Search Facebook User for " + facebook);
+	  			result.facebook_user = facebook;
+	  			facebookApiLoadInformationByUser(facebook, result);
+				console.log("Facebook data successful loaded for " + result.name);
+			} else {
+				alert(response.facebook.status);
 			}
 	  	}
 	});
@@ -217,7 +251,7 @@ function infoWindowLoad(id) {
 			}
 		});
 	} else {
-
+		fillModal(id, GOOGLE_API_RESULTS.google.result[id-1]);
 	}
 }
 
@@ -411,6 +445,172 @@ function fillModal(type,data) {
 
 		$(".nav-tabs a[href='#who_we_are']").tab("show");
 	} else {
+
+		var result = data;
+
+		console.log(" draw components -> " + result.name);
+
+		$(".title").html(result.name);
+
+		var body = $("div.modal-body");
+		$(body).html("");
+
+		var rowOne = $("<div class='row'></div>");
+		$(body).append(rowOne);
+
+		var rowOneCol = $("<div class='col-md-4 thumbnail'></div>");
+		$(rowOne).append(rowOneCol);
+		
+		if( result.photo !== undefined ) {
+			var image = $("<img class='img-responsive' border='0' />")	
+				.prop("src", result.photo);
+			$(rowOneCol).append(image);	
+		} else {
+			var image = $("<img class='img-responsive' border='0' />")	
+				.prop("src", "resources/images/no-image.jpg");
+			$(rowOneCol).append(image);
+		}
+		
+		var rowTwoCol = $("<div class='col-md-8 info'></div>");
+		$(rowOne).append(rowTwoCol);
+
+		var p_address = $("<p class='address'></p>")
+			.html(result.vicinity);
+		$(rowTwoCol).append(p_address);
+
+		if( result.facebook != undefined && result.facebook.phone ) {		
+
+			var p_phone = $("<p class='phone'></p>")
+				.html(result.facebook.phone);
+			$(rowTwoCol).append(p_phone);
+
+		}
+
+		if( result.facebook != undefined && result.facebook.website ) {
+
+			var p_website = $("<p class='website'></p>")
+				.html(result.facebook.website);
+			$(rowTwoCol).append(p_website);
+
+		}
+
+		var rowTwo = $("<div class='row'></div>");
+		$(body).append(rowTwo);
+
+		var rowTwoCol = $("<div class='col-md-12 text-left'></div>");
+		$(rowTwoCol).html("<h3>O que est&atilde;o falando sobre <b class='title'>" + result.name + "</b> nas redes sociais</h3>");
+		$(rowTwo).append(rowTwoCol);
+
+		var rowThree = $("<div class='row'></div>");
+		$(body).append(rowThree);
+
+		var rowThreeCol = $("<div class='col-md-12'></div>");
+		$(rowThree).append(rowThreeCol);
+
+		// tabs
+		var ul = $("<ul class='nav nav-tabs'></ul>");
+		$(rowTwoCol).append(ul);
+
+		var item_facebook = $("<li></li>")
+		$(ul).append(item_facebook);
+
+		var link_facebook = $("<a data-toggle='tab' href='#facebook'></a>");
+		$(link_facebook).html("Facebook");
+		$(item_facebook).append(link_facebook);
+
+		var item_twitter = $("<li></li>")
+		$(ul).append(item_twitter);
+
+		var link_twitter = $("<a data-toggle='tab' href='#twitter'></a>");
+		$(link_twitter).html("Twitter");
+		$(item_twitter).append(link_twitter);
+
+		var item_graphics = $("<li></li>")
+		$(ul).append(item_graphics);
+
+		var link_graphics = $("<a data-toggle='tab' href='#graphics'></a>");
+		$(link_graphics).html("An&aacute;lise Visual");
+		$(item_graphics).append(link_graphics);
+
+		var tab_content = $("<div class='tab-content'></div>");
+		$(rowTwoCol).append(tab_content);
+
+		var tab_facebook = $("<div id='facebook' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_facebook);
+
+		var tab_facebook_col = $("<div class='col-md-12'></div>");
+		$(tab_facebook).append(tab_facebook_col);
+
+		var tab_facebook_col_h3 = $("<h3 class='info'></h3>");
+		$(tab_facebook_col).append(tab_facebook_col_h3);
+		$(tab_facebook_col_h3).html("Nossos números no <b>Facebook</b>");
+
+		var tab_facebook_col_p_likes = $("<p class='likes'></p>");
+		$(tab_facebook_col).append(tab_facebook_col_p_likes);
+
+		if( result.facebook && result.facebook.likes ) {
+			$(tab_facebook_col_p_likes).html("Likes: <b>" + result.facebook.likes + "</b>");	
+		} else {
+			$(tab_facebook_col_p_likes).html("Likes: <b>0</b>");	
+		}
+
+		var tab_facebook_col_p_checkins = $("<p class='checkins'></p>");
+		$(tab_facebook_col).append(tab_facebook_col_p_checkins);
+
+		if( result.facebook && result.facebook.checkins ) {
+			$(tab_facebook_col_p_checkins).html("Checkins: <b>" + result.facebook.checkins + "</b>");
+		} else {
+			$(tab_facebook_col_p_checkins).html("Checkins: <b>0</b>");
+		}
+
+		var tab_twitter = $("<div id='twitter' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_twitter);
+
+		var tab_twitter_row = $("<div class='col-md-12'></div>");
+		$(tab_twitter).append(tab_twitter_row);
+		$(tab_twitter_row).html("<h3>Nossas men&ccedil;&otilde;es no <b>Twitter</b></h3>");
+
+		/*
+
+		for( var i=0; i<data.ranktoon.twitter.twetts.length; i++ ) {
+
+			var tab_twitter_col_left = $("<div class='col-md-1'></div>");
+			$(tab_twitter_row).append(tab_twitter_col_left);
+
+			var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
+				.prop("src", "resources/images/twitter_profile.png");
+			$(tab_twitter_col_left).append(tab_twitter_col_left_image);
+
+			var tab_twitter_col_right = $("<div class='col-md-11'></div>");
+			$(tab_twitter_row).append(tab_twitter_col_right);
+
+			var tab_twitter_col_right_link = $("<a></a>")
+				.prop("href","http://twitter.com/" + "usuario"); // set the username
+			$(tab_twitter_col_right).append(tab_twitter_col_right_link);
+
+			var tab_twitter_col_right_span_name = $("<span class='name'></span>")
+				.html("Name");
+			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
+
+			var tab_twitter_col_right_span_user = $("<span class='user'></span>")
+				.html(" - @usuario");
+			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
+			
+			var tab_twitter_col_right_message = $("<p class='message'></p>")
+				.html("bla bla bla bla");
+			$(tab_twitter_row).append(tab_twitter_col_right_message);
+
+			$(tab_twitter_row).append($("<hr />"));
+		}
+		*/
+
+		var tab_graphics = $("<div id='graphics' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_graphics);
+
+		var tab_graphics_col = $("<div class='col-md-12'></div>");
+		$(tab_graphics).append(tab_graphics_col);
+
+		$(".nav-tabs a[href='#facebook']").tab("show");
 
 	}
 

@@ -239,29 +239,120 @@
 
 	function facebook() {
 		$query = getParameter($_GET, "query");
+		
+		if( strpos($query, "-") > -1 ) {
+			$query = substr($query, 0, strpos($query, "-") -1);
+		}
+
 		$query .= "+facebook";
 		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
-		$json = file_get_contents($url);
-		$arr = json_decode($json, TRUE);
+		
+		$json = null;
+		$arr = null;
+		$check = 1;
+		while( $arr === null || ( isset($arr["responseStatus"]) && $arr["responseStatus"] === 403 ) && $check < 5) {
 
-		if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
-			$regex = '/(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/';
-			preg_match($regex, $arr["responseData"]["results"][0]["unescapedUrl"],$matches, PREG_OFFSET_CAPTURE, 3);
-			if( isset($matches) && sizeof($matches) == 2 ) {
-				$success = array();
-				$success["facebook"] = array("status" => "OK", "result" => $matches[1][0]);
-				print(json_encode($success));
+			getLogger()->debug(" -> facebook call for " . $check++ . " time(s)");
+
+			$json = file_get_contents($url);
+			$arr = json_decode($json, TRUE);
+			//print_r($arr);
+
+			$likes = array();
+			$count = 0;
+			if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
+				foreach( $arr["responseData"]["results"] as $res ) {
+					$content = $res["content"];
+					if( strpos($content, "curtidas" ) > -1 ) {
+						$curtidas = substr( $content, 0, strpos($content, " curtidas" ));
+						$curtidas = substr($curtidas, strrpos($curtidas," ")+1, strlen($curtidas));
+						getLogger()->debug(" -> facebook curtidas " . $curtidas);
+
+						if( is_numeric($curtidas) ) {
+							$likes[$count] = $curtidas;
+						}
+					}
+					$count++;
+				}
+				arsort($likes);
+
+				// if has likes, pick the first
+				if( sizeof($likes) > 0 ) {
+					$value = array_values($likes)[0];
+					$key = array_search($value, $likes);
+
+					$regex = '/(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/';
+					preg_match($regex, $arr["responseData"]["results"][$key]["unescapedUrl"],$matches, PREG_OFFSET_CAPTURE, 3);
+					if( isset($matches) && sizeof($matches) == 2 && !is_numeric($matches[1][0]) && $matches[1][0] != "timeline" ) {
+						$success = array();
+						$success["facebook"] = array("status" => "OK", "result" => $matches[1][0]);
+						getLogger()->debug(" -> facebook success " . $matches[1][0]);
+						print(json_encode($success));
+					} else {
+						$result = str_replace("https://www.facebook.com/","",$arr["responseData"]["results"][$key]["unescapedUrl"]);
+						if( strpos($result, "?") > -1 ) {
+							$result = substr($result, 0, strpos($result, "?"));
+						}
+
+						if( strpos($result, "https://pt-br.facebook.com/pages/") > -1 ) {
+							$result = str_replace("https://pt-br.facebook.com/pages/","", $result);
+
+							if( strpos($result, "/") > -1 ) {
+								$result = substr($result, 0, strpos($result, "/"));
+							}
+						}
+
+						if( strpos($result, "https://pt-br.facebook.com/") > -1 ) {
+							$result = str_replace("https://pt-br.facebook.com/","", $result);
+
+							if( strpos($result, "/") > -1 ) {
+								$result = substr($result, 0, strpos($result, "/"));
+							}
+						}
+
+						$success = array();
+						$success["facebook"] = array("status" => "OK", "result" => $result);
+						getLogger()->debug(" -> facebook success " . $result);
+						print(json_encode($success));
+					}	
+
+				} else {
+					$regex = '/(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/';
+					preg_match($regex, $arr["responseData"]["results"][0]["unescapedUrl"],$matches, PREG_OFFSET_CAPTURE, 3);
+					if( isset($matches) && sizeof($matches) == 2 ) {
+						$success = array();
+						$success["facebook"] = array("status" => "OK", "result" => $matches[1][0]);
+						getLogger()->debug(" -> facebook success " . $matches[1][0]);
+						print(json_encode($success));
+					} else {
+						$result = str_replace("https://www.facebook.com/","",$arr["responseData"]["results"][0]["unescapedUrl"]);
+						if( strpos($result, "?") > -1 ) {
+							$result = substr($result, 0, strpos($result, "?"));
+						}
+
+						$success = array();
+						$success["facebook"] = array("status" => "OK", "result" => $result);
+						getLogger()->debug(" -> facebook success " . $result);
+						print(json_encode($success));
+					}
+				}
+				
+			} else {
+				$error = array();
+				$error["facebook"] = array("status" => "ERROR", "message" => "result not found");
+				getLogger()->debug(" -> facebook error for " . $query);
+				print(json_encode($error));
 			}
-		} else {
-			$error = array();
-			$error["facebook"] = array("status" => "ERROR", "message" => "result not found");
-			print(json_encode($error));
+
 		}
 	}
 
 	function twitter() {
 		$query = getParameter($_GET, "query");
 		$query .= "+twitter";
+		
+		getLogger()->debug(" -> search facebook for $query");
+
 		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
 		$json = file_get_contents($url);
 		$arr = json_decode($json, TRUE);
@@ -272,12 +363,22 @@
 				$result = substr($result, 0, strpos($result, "?"));
 			}
 
+			if( strpos($result, "/") > -1 ) {
+				$result = str_replace("/","",$result);
+			}
+
+			if( strpos($result, "\\") > -1 ) {
+				$result = str_replace("\\","",$result);
+			}
+
 			$success = array();
 			$success["twitter"] = array("status" => "OK", "result" => $result);
+			getLogger()->debug(" -> facebook success " . $result);
 			print(json_encode($success));
 		} else {
 			$error = array();
 			$error["twitter"] = array("status" => "ERROR", "message" => "result not found");
+			getLogger()->debug(" -> facebook error");
 			print(json_encode($error));
 		}
 	}

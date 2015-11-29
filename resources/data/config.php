@@ -5,6 +5,8 @@
     	session_start();	
 	}
 
+	date_default_timezone_set("America/Sao_Paulo");
+
 	// SET TO PRD OR DEV
 	define("TRUE", "TRUE");
 	define("FALSE", "FALSE");
