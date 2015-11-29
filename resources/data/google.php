@@ -259,6 +259,29 @@
 		}
 	}
 
+	function twitter() {
+		$query = getParameter($_GET, "query");
+		$query .= "+twitter";
+		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
+		$json = file_get_contents($url);
+		$arr = json_decode($json, TRUE);
+
+		if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
+			$result = str_replace("https://twitter.com/","",$arr["responseData"]["results"][0]["unescapedUrl"]);
+			if( strpos($result, "?") > -1 ) {
+				$result = substr($result, 0, strpos($result, "?"));
+			}
+
+			$success = array();
+			$success["twitter"] = array("status" => "OK", "result" => $result);
+			print(json_encode($success));
+		} else {
+			$error = array();
+			$error["twitter"] = array("status" => "ERROR", "message" => "result not found");
+			print(json_encode($error));
+		}
+	}
+
 	// choose what method call
 	$action = getParameter($_GET, "action");
 	if( $action !== null ) {
@@ -271,6 +294,9 @@
 				break;
 			case "facebook":
 				facebook();
+				break;
+			case "twitter":
+				twitter();
 				break;
 			default:
 				error();

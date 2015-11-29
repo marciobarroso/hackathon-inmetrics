@@ -70,13 +70,6 @@ function addInfoMarker(lat_, lng_, title_, ranking_) {
 		infoWindowClick(this.id);
 	});
 
-	marker.addListener('mouseover', function(){
-		if( !this.loaded ) {
-			infoWindowLoad(this.id);
-			this.loaded = true;
-		}
-	});
-
 	// extends map bounds
 	GOOGLE_API_MAP_BOUNDS.extend(marker.position);
 
@@ -150,7 +143,7 @@ function googleApiLoadMap() {
 	// load map
 	GOOGLE_API_MAP = new google.maps.Map(document.getElementById('map'), {
     	center: {lat: -34.397, lng: 150.644},
-    	zoom: 6
+    	zoom: 5
   	});
 
   	GOOGLE_API_MAP_BOUNDS = new google.maps.LatLngBounds();
@@ -205,24 +198,221 @@ function getNearbySearchUrl(query) {
 }
 
 function infoWindowClick(id) {
-	if( id === 0 ) {
-		infoWindowRanktoon();
-	} else {
-		$("div#modal").modal();
-	}
-
 	console.log("open infowindow " + id);
+	infoWindowLoad(id);
+	$("div#modal").modal();
 } 
 
 function infoWindowLoad(id) {
 	console.log("loading informations for marker " + id);
+	var call;
+	if( id == 0 ) {
+		call = "resources/data/ranktoon.php?action=info";
+		$.ajax({
+			type: "GET",
+			url: call,
+			dataType: "json",
+			success: function(data) {
+				fillModal(id,data);
+			}
+		});
+	} else {
 
-
-
+	}
 }
 
-function infoWindowRanktoon() {
-	$("div#modal").modal();
+function fillModal(type,data) {
+	if( type == 0 ) {
+		$(".title").html(data.ranktoon.name);
 
-	
+		var body = $("div.modal-body");
+		$(body).html("");
+
+		var rowOne = $("<div class='row'></div>");
+		$(body).append(rowOne);
+
+		var rowOneCol = $("<div class='col-md-12'></div>");
+		$(rowOne).append(rowOneCol);
+		
+		var image = $("<img class='img-responsive' border='0' />")	
+			.prop("src", data.ranktoon.image);
+		$(rowOneCol).append(image);	
+
+		var rowTwo = $("<div class='row'></div>");
+		$(rowTwo).css("padding-top","20px");
+		$(body).append(rowTwo);
+
+		var rowTwoCol = $("<div class='col-md-12'></div>");
+		$(rowTwo).append(rowTwoCol);
+
+		// tabs
+		var ul = $("<ul class='nav nav-tabs'></ul>");
+		$(rowTwoCol).append(ul);
+
+		var item_who_we_are = $("<li class='active'></li>");
+		$(ul).append(item_who_we_are);
+
+		var link_who_we_are = $("<a data-toggle='tab' href='#who_we_are'></a>");
+		$(link_who_we_are).html("Quem somos");
+		$(item_who_we_are).append(link_who_we_are);
+
+		var item_institutional = $("<li></li>")
+		$(ul).append(item_institutional);
+
+		var link_institutional = $("<a data-toggle='tab' href='#institutional'></a>");
+		$(link_institutional).html("Institucional");
+		$(item_institutional).append(link_institutional);
+
+		var item_facebook = $("<li></li>")
+		$(ul).append(item_facebook);
+
+		var link_facebook = $("<a data-toggle='tab' href='#facebook'></a>");
+		$(link_facebook).html("Facebook");
+		$(item_facebook).append(link_facebook);
+
+		var item_twitter = $("<li></li>")
+		$(ul).append(item_twitter);
+
+		var link_twitter = $("<a data-toggle='tab' href='#twitter'></a>");
+		$(link_twitter).html("Twitter");
+		$(item_twitter).append(link_twitter);
+
+		var item_contact = $("<li></li>")
+		$(ul).append(item_contact);
+
+		var link_contact = $("<a data-toggle='tab' href='#contact'></a>");
+		$(link_contact).html("Contatos");
+		$(item_contact).append(link_contact);
+
+		var tab_content = $("<div class='tab-content'></div>");
+		$(rowTwoCol).append(tab_content);
+
+		var tab_who_we_are = $("<div id='who_we_are' class='tab-pane fade in active row'></div>");
+		$(tab_content).append(tab_who_we_are);
+
+		var tab_who_we_are_col = $("<div class='col-md-12'></div>");
+		$(tab_who_we_are).append(tab_who_we_are_col);
+
+		var tab_who_we_are_col_h3 = $("<h3 class='info'></h3>");
+		$(tab_who_we_are_col).append(tab_who_we_are_col_h3);
+		$(tab_who_we_are_col_h3).html("Quem somos ... ");
+
+		var tab_who_we_are_col_p = $("<p class='description'></p>");
+		$(tab_who_we_are_col).append(tab_who_we_are_col_p);
+		$(tab_who_we_are_col_p).html("Description bla bla lba");
+
+		var tab_institutional = $("<div id='institutional' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_institutional);
+
+		var tab_institutional_col = $("<div class='col-md-12'></div>");
+		$(tab_institutional).append(tab_institutional_col);
+
+		var tab_institutional_col_h3 = $("<h3 class='info'></h3>");
+		$(tab_institutional_col).append(tab_institutional_col_h3);
+		$(tab_institutional_col_h3).html("Institucional");
+
+		var tab_institutional_col_p = $("<p class='institutional'></p>");
+		$(tab_institutional_col).append(tab_institutional_col_p);
+		$(tab_institutional_col_p).html("Institutional bla bla lba");
+
+		var tab_facebook = $("<div id='facebook' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_facebook);
+
+		var tab_facebook_col = $("<div class='col-md-12'></div>");
+		$(tab_facebook).append(tab_facebook_col);
+
+		var tab_facebook_col_h3 = $("<h3 class='info'></h3>");
+		$(tab_facebook_col).append(tab_facebook_col_h3);
+		$(tab_facebook_col_h3).html("Nossos números no <b>Facebook</b>");
+
+		var tab_facebook_col_p_likes = $("<p class='likes'></p>");
+		$(tab_facebook_col).append(tab_facebook_col_p_likes);
+		$(tab_facebook_col_p_likes).html("Likes: <b> 43241 </b>");
+
+		var tab_facebook_col_p_checkins = $("<p class='checkins'></p>");
+		$(tab_facebook_col).append(tab_facebook_col_p_checkins);
+		$(tab_facebook_col_p_checkins).html("Checkins: <b> 412513410 </b>");
+
+		var tab_twitter = $("<div id='twitter' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_twitter);
+
+		var tab_twitter_row = $("<div class='col-md-12'></div>");
+		$(tab_twitter).append(tab_twitter_row);
+		$(tab_twitter_row).html("<h3>Nossas men&ccedil;&otilde;es no <b>Twitter</b></h3>");
+
+		for( var i=0; i<data.ranktoon.twitter.twetts.length; i++ ) {
+
+			var tab_twitter_col_left = $("<div class='col-md-1'></div>");
+			$(tab_twitter_row).append(tab_twitter_col_left);
+
+			var tab_twitter_col_left_image = $("<img class='img-responsive' width='60' heigth='60' border='0' />")
+				.prop("src", "resources/images/twitter_profile.png");
+			$(tab_twitter_col_left).append(tab_twitter_col_left_image);
+
+			var tab_twitter_col_right = $("<div class='col-md-11'></div>");
+			$(tab_twitter_row).append(tab_twitter_col_right);
+
+			var tab_twitter_col_right_link = $("<a></a>")
+				.prop("href","http://twitter.com/" + "usuario"); // set the username
+			$(tab_twitter_col_right).append(tab_twitter_col_right_link);
+
+			var tab_twitter_col_right_span_name = $("<span class='name'></span>")
+				.html("Name");
+			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_name);
+
+			var tab_twitter_col_right_span_user = $("<span class='user'></span>")
+				.html(" - @usuario");
+			$(tab_twitter_col_right_link).append(tab_twitter_col_right_span_user);
+			
+			var tab_twitter_col_right_message = $("<p class='message'></p>")
+				.html("bla bla bla bla");
+			$(tab_twitter_row).append(tab_twitter_col_right_message);
+
+			$(tab_twitter_row).append($("<hr />"));
+		}
+
+
+		var tab_contact = $("<div id='contact' class='tab-pane fade row'></div>");
+		$(tab_content).append(tab_contact);
+
+		var tab_contact_col = $("<div class='col-md-12'></div>");
+		$(tab_contact).append(tab_contact_col);
+
+		var tab_contact_col_h3 = $("<h3 class='info'></h3>");
+		$(tab_contact_col).append(tab_contact_col_h3);
+		$(tab_contact_col_h3).html("Entre em contato conosco ... ");
+
+		var tab_contact_name = $("<p class='name'></p>");
+		$(tab_contact_col).append(tab_contact_name);
+		$(tab_contact_name).html(data.ranktoon.name);
+
+		var tab_contact_address = $("<p class='address'></p>");
+		$(tab_contact_col).append(tab_contact_address);
+		$(tab_contact_address).html(data.ranktoon.address);
+
+		var tab_contact_address = $("<p class='address'></p>");
+		$(tab_contact_col).append(tab_contact_address);
+		$(tab_contact_address).html(data.ranktoon.address);
+
+		var tab_contact_phone = $("<p class='phone'></p>");
+		$(tab_contact_col).append(tab_contact_phone);
+		
+		var phones = "";
+		var separator = "";
+		for( var i=0; i<data.ranktoon.phone.length; i++ ) {
+			phones += separator + data.ranktoon.phone[i];
+			separator = " / ";	
+		}
+		$(tab_contact_address).html(phones);
+
+		var tab_contact_mail = $("<p class='mail'></p>");
+		$(tab_contact_col).append(tab_contact_mail);
+		$(tab_contact_mail).html(data.ranktoon.mail);
+
+		$(".nav-tabs a[href='#who_we_are']").tab("show");
+	} else {
+
+	}
+
+
 }
