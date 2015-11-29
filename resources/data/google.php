@@ -34,15 +34,33 @@
 		$arr = null;
 		$decision = FALSE;
 
-		while( $arr === null || (isset($arr["result"]) && sizeof($arr["result"]) < 5) ) {
+		while( sizeof($arr["results"]) < 5 ) {
 
-			// add 1000 to the distance
-			$START_RADIUS = $START_RADIUS + 1000;
+			if( $START_RADIUS < 5000 )
+				$START_RADIUS = $START_RADIUS + 1000;
+			else if( $START_RADIUS < 10000 )
+				$START_RADIUS = $START_RADIUS + 2000;
+			else if( $START_RADIUS < 30000 )
+				$START_RADIUS = $START_RADIUS + 5000;
+			else if( $START_RADIUS < 500000 )
+				$START_RADIUS = $START_RADIUS + 10000;
+			else if( $START_RADIUS < 100000 )
+				$START_RADIUS = $START_RADIUS + 25000;
+			else if( $START_RADIUS > 100000 ) {
+				getLogger()->debug(" -> zero results");
+				$result = array();
+				$result["google"] = array();
+				$result["google"]["status"] = "ERROR";
+				$result["google"]["message"] = "No results found";
+				$json = json_encode($result);
+				print($json);
+				return;
+			}
 
 			if( CONFIG_DEBUG === TRUE ) {
 				$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-nearby.xml";
 			} else {
-				$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?";
+				$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
 				// required parameters
 				$url .= "&key=" . CONFIG_GOOGLE_API_KEY;
 				$url .= "&location=" . $latitude . "," . $longitude;
@@ -60,7 +78,7 @@
 				$call = new DateTime();
 			}
 
-			$xml = file_get_contents($url);
+			$json = file_get_contents($url);
 
 			if( GOOGLE_API_DEBUG === TRUE ) {
 				$elapsed = $start->diff($call);
@@ -68,10 +86,12 @@
 				debug(" -> elapsed time : " . $elapsed->format("%H:%I:%S") . " millisencods");
 			}
 			
-			$xml = new SimpleXMLElement($xml);
-			$json = json_encode($xml);
+//			$xml = new SimpleXMLElement($xml);
+//			$json = json_encode($xml);
 			$arr = json_decode($json, TRUE);
-			$arr["GOOGLE_API_KEY"] = CONFIG_GOOGLE_API_KEY;
+//			$arr["GOOGLE_API_KEY"] = CONFIG_GOOGLE_API_KEY;
+
+			//print_r($arr["results"]);
 
 			/*if( $arr["status"] === "ZERO_RESULTS" ) {
 				getLogger()->debug(" -> zero results");
@@ -94,7 +114,7 @@
 			$call = new DateTime();
 		}
 
-		sksort($arr["result"],"rating",false);
+		sksort($arr["results"],"rating",false);
 
 		if( GOOGLE_API_DEBUG === TRUE ) {
 			$elapsed = $start->diff($call);
@@ -107,10 +127,10 @@
 		}
 
 		$LIMIT_RESULT = 5;
-		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
+		for( $i=0; $i<sizeof($arr["results"]); $i++ ) {
 			if( $i < $LIMIT_RESULT ) {
-				if( isset($arr["result"][$i]) ) {
-					$result["google"]["result"][$i] = $arr["result"][$i];
+				if( isset($arr["results"][$i]) ) {
+					$result["google"]["result"][$i] = $arr["results"][$i];
 				
 					if( isset($result["google"]["result"][$i]["photo"]) ) {
 						$result["google"]["result"][$i]["photo"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300, 200);
