@@ -1,3 +1,22 @@
-.header-top {
-	margin-top: 10px;
+html, body {
+	height: 100%;
+	margin: 0;
+    padding: 0;
+}
+
+div#map {
+	height: 100%;
+}
+
+div#overlay {
+	width: 100%;
+	position: absolute;
+	top: 10px;
+	z-index: 9999;
+	height: 50px;
+	background-color: alpha;
+}
+
+div#modal {
+	z-index: 10000;
 }

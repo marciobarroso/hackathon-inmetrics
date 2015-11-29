@@ -40,7 +40,9 @@ https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJ0YrcJ2bPYpYR
 
 https://maps.googleapis.com/maps/api/place/details/json?placeid=ChIJN1t_tDeuEmsRUsoyG83frY4&key=
 
-https://maps.googleapis.com/maps/api/place/textsearch/xml?location=-33.407187799999996,-70.5680272&radius=5000&query=restaurantes&key=AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs
+https://maps.googleapis.com/maps/api/place/nearbysearch/xml?location=-33.407187799999996,-70.5680272&radius=5000&keyword=restaurantes&key=AIzaSyDm743hCy0maE2farUjk4C24_udd5cLaXs&radius=1000&rankby=prominence
 
 # Detalhe da Busca
 http://ranktoon.com/resources/data/google.php?action=nearby&query=restaurante&latitude=-33.407187799999996&longitude=-70.5680272
+
+https://maps.googleapis.com/maps/api/place/textsearch/json?query=usp facebook&language=pt-BR&key=AIzaSyA0t4XNY5bRhgy1SWPXbWjyCTJsqybFRHs

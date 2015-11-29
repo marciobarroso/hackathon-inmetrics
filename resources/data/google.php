@@ -2,46 +2,133 @@
 
 	include "config.php";
 
+	define("GOOGLE_API_DEBUG", FALSE);
+	define("GOOGLE_API_RESULT_SESSION", "GOOGLE_API_RESULT_SESSION");
+
+
 	// all responses must be an JSON
 	header('Content-Type: text/json');
 	
-	function nearby() {
-		$query = $_GET["query"];
-		$latitude = $_GET["latitude"];
-		$longitude = $_GET["longitude"];
+	function debug($msg) {
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			echo $msg . "\r\n";	
+		}
+	}
 
-		if( CONFIG_DEBUG ) {
-			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-nearby.xml";
-		} else {
-			$url = "https://maps.googleapis.com/maps/api/place/textsearch/xml?";
-			$url .= "location=" . $latitude . "," . $longitude;
-			$url .= "&radius=5000&query=" . $query;
-			$url .= "&key=" . CONFIG_GOOGLE_API_KEY;
+	function nearby() {
+		$LIMIT_RESULT = 5;
+		$START_RADIUS = 0;
+
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			$start = new DateTime();
+			debug(" -> nearby start at " . $start->format('Y-m-d H:i:s'));
 		}
 
-		$xml = file_get_contents($url);
-		
-		$xml = new SimpleXMLElement($xml);
-		$json = json_encode($xml);
-		$arr = json_decode($json, TRUE);
+		$query = getParameter($_GET, "query");
+		$latitude = getParameter($_GET, "latitude");
+		$longitude = getParameter($_GET, "longitude");
+
+		getLogger()->debug(" -> enter nearby method with parameters '$query', '$latitude' and '$longitude'");
+
+		$json = null;
+		$arr = null;
+		$decision = FALSE;
+
+		while( $arr === null || (isset($arr["result"]) && sizeof($arr["result"]) < 5) ) {
+
+			// add 1000 to the distance
+			$START_RADIUS = $START_RADIUS + 1000;
+
+			if( CONFIG_DEBUG === TRUE ) {
+				$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-nearby.xml";
+			} else {
+				$url = "https://maps.googleapis.com/maps/api/place/nearbysearch/xml?";
+				// required parameters
+				$url .= "&key=" . CONFIG_GOOGLE_API_KEY;
+				$url .= "&location=" . $latitude . "," . $longitude;
+
+				// optionals parameters
+				$url .= "&radius=" . $START_RADIUS;
+				$url .= "&keyword=" . $query;
+				$url .= "&rankby=prominence";
+				
+			}
+
+			getLogger()->debug(" -> call url $url");
+
+			if( GOOGLE_API_DEBUG === TRUE ) {
+				$call = new DateTime();
+			}
+
+			$xml = file_get_contents($url);
+
+			if( GOOGLE_API_DEBUG === TRUE ) {
+				$elapsed = $start->diff($call);
+				debug(" -> call google api at " . $call->format('Y-m-d H:i:s'));
+				debug(" -> elapsed time : " . $elapsed->format("%H:%I:%S") . " millisencods");
+			}
+			
+			$xml = new SimpleXMLElement($xml);
+			$json = json_encode($xml);
+			$arr = json_decode($json, TRUE);
+			$arr["GOOGLE_API_KEY"] = CONFIG_GOOGLE_API_KEY;
+
+			if( $arr["status"] === "ZERO_RESULTS" ) {
+				getLogger()->debug(" -> zero results");
+				$result = array();
+				$result["google"] = array();
+				$result["google"]["status"] = "ERROR";
+				$result["google"]["message"] = "No results found";
+				$json = json_encode($result);
+				print($json);
+				return;
+			}
+		}
+			
 		$result = array();
 		$result["google"] = array();
 		$result["google"]["status"] = "OK"; 
 		$result["google"]["result"] = array();
 
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			$call = new DateTime();
+		}
+
 		sksort($arr["result"],"rating",false);
 
-		$limit = 5;
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			$elapsed = $start->diff($call);
+			debug(" -> call sort algorithm at " . $call->format('Y-m-d H:i:s'));
+			debug(" -> elapsed time : " . $elapsed->format("%H:%I:%S") . " millisencods");
+		}
+
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			$call = new DateTime();
+		}
+
+		$LIMIT_RESULT = 5;
 		for( $i=0; $i<sizeof($arr["result"]); $i++ ) {
-			if( $i < $limit ) {
-				$result["google"]["result"][$i] = $arr["result"][$i];
+			if( $i < $LIMIT_RESULT ) {
+				if( isset($arr["result"][$i]) ) {
+					$result["google"]["result"][$i] = $arr["result"][$i];
+				
+					if( isset($result["google"]["result"][$i]["photo"]) ) {
+						$result["google"]["result"][$i]["photo"] = getPhotoByReference($result["google"]["result"][$i]["photo"]["photo_reference"], 300, 200);
+					}
+				}
 			} else {
 				break;
 			}
 		}
 
+		if( GOOGLE_API_DEBUG === TRUE ) {
+			$elapsed = $start->diff($call);
+			debug(" -> call photo load at " . $call->format('Y-m-d H:i:s'));
+			debug(" -> elapsed time : " . $elapsed->format("%H:%I:%S") . " millisencods");
+		}
+
 		// load photos
-		for( $i=0; $i < sizeof($result["google"]["result"]); $i++ ) {
+/*		for( $i=0; $i < sizeof($result["google"]["result"]); $i++ ) {
 			if( isset($result["google"]["result"][$i]["photo"]) ) {
 				$photo = array();
 				$json = getPlaceById($result["google"]["result"][$i]["place_id"]);
@@ -71,14 +158,18 @@
 				unset($result["google"]["result"][$i]["photo"]);
 			}
 		}
-		
+*/		
 		//print_r($result);
 		$json = json_encode($result);
+
+		$_SESSION[GOOGLE_API_RESULT_SESSION] = $json;
+
+		getLogger()->debug(" -> return $json");
 		print($json);		
 	}
 
 	function getPlaceById($placeId) {
-		if( CONFIG_DEBUG ) {
+		if( CONFIG_DEBUG === TRUE ) {
 			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-place-by-id.json";	
 		} else {
 			$url = "https://maps.googleapis.com/maps/api/place/details/json?placeid=$placeId&key=" . CONFIG_GOOGLE_API_KEY;	
@@ -89,7 +180,7 @@
 	}
 
 	function getPhotoByReference($reference, $maxwidth, $maxheight) {
-		if( CONFIG_DEBUG ) {
+		if( CONFIG_DEBUG === TRUE ) {
 			$url = CONFIG_SERVER_PREFIX . "/resources/data/google-api-photo-by-reference.jpg";
 		} else {
 			$url  = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=$maxwidth&maxheight=$maxheight";
@@ -109,38 +200,77 @@
 	}
 
 	function sksort(&$array, $subkey="id", $sort_ascending=false) {
+		$temp_array = array();
 
-	    if (count($array))
+	    if ( count($array) > 0 ) {
 	        $temp_array[key($array)] = array_shift($array);
+	    
 
-	    foreach($array as $key => $val){
-	        $offset = 0;
-	        $found = false;
-	        foreach($temp_array as $tmp_key => $tmp_val)
-	        {
-	            if(!$found and isset($val[$subkey]) and isset($tmp_val[$subkey]) and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
-	            {
-	                $temp_array = array_merge(    (array)array_slice($temp_array,0,$offset),
-	                                            array($key => $val),
-	                                            array_slice($temp_array,$offset)
-	                                          );
-	                $found = true;
-	            }
-	            $offset++;
-	        }
-	        if(!$found) $temp_array = array_merge($temp_array, array($key => $val));
-	    }
+		    foreach($array as $key => $val){
+		        $offset = 0;
+		        $found = false;
+		        foreach($temp_array as $tmp_key => $tmp_val)
+		        {
+		            if(!$found and isset($val[$subkey]) and isset($tmp_val[$subkey]) and strtolower($val[$subkey]) > strtolower($tmp_val[$subkey]))
+		            {
+		                $temp_array = array_merge(    (array)array_slice($temp_array,0,$offset),
+		                                            array($key => $val),
+		                                            array_slice($temp_array,$offset)
+		                                          );
+		                $found = true;
+		            }
+		            $offset++;
+		        }
+		        if(!$found) $temp_array = array_merge($temp_array, array($key => $val));
+		    }
 
-	    if ($sort_ascending) $array = array_reverse($temp_array);
+		    if ($sort_ascending) $array = array_reverse($temp_array);
 
-	    else $array = $temp_array;
+		    else $array = $temp_array;
+		}
+	}
+
+	function search() {
+		$query = getParameter($_GET, "query");
+		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
+		$json = file_get_contents($url);
+		print($json);
+	}
+
+	function facebook() {
+		$query = getParameter($_GET, "query");
+		$query .= "+facebook";
+		$url = "https://ajax.googleapis.com/ajax/services/search/web?v=1.0&q=$query";
+		$json = file_get_contents($url);
+		$arr = json_decode($json, TRUE);
+
+		if( isset($arr["responseData"]) && isset($arr["responseData"]["results"]) && sizeof($arr["responseData"]["results"]) > 1 ) {
+			$regex = '/(?:https?:\/\/)?(?:www\.)?facebook\.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[\w\-]*\/)*([\w\-\.]*)/';
+			preg_match($regex, $arr["responseData"]["results"][0]["unescapedUrl"],$matches, PREG_OFFSET_CAPTURE, 3);
+			if( isset($matches) && sizeof($matches) == 2 ) {
+				$success = array();
+				$success["facebook"] = array("status" => "OK", "result" => $matches[1][0]);
+				print(json_encode($success));
+			}
+		} else {
+			$error = array();
+			$error["facebook"] = array("status" => "ERROR", "message" => "result not found");
+			print(json_encode($error));
+		}
 	}
 
 	// choose what method call
-	if( isset($_GET["action"]) ) {
-		switch( $_GET["action"] ) {
+	$action = getParameter($_GET, "action");
+	if( $action !== null ) {
+		switch( $action ) {
 			case "nearby":
 				nearby();
+				break;
+			case "search":
+				search();
+				break;
+			case "facebook":
+				facebook();
 				break;
 			default:
 				error();
